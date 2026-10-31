@@ -1,72 +1,77 @@
-# PulseLedger — Institutional Walkthrough Script & Technical Defense
-### Engineering-Grade Video Narration for Senior Financial & Systems Reviewers
+# PulseLedger — Institutional Walkthrough Script
+## Complete Feature Walkthrough with Explicit Tech Stack & Engineering Skills Integration
 
-- **Total Runtime**: Exactly 3 Minutes 30 Seconds (03:30 / 6,300 frames @ 30 FPS)
-- **Target Cadence**: 140–150 words per minute (Commanding, measured, analytical, authoritative)
+- **Total Runtime**: Exactly 3 Minutes 30 Seconds (`03:30` / 6,300 frames @ 30 FPS)
+- **Target Cadence**: 140–150 words per minute (Measured, analytical, authoritative)
+- **Reviewer Target**: Senior Fintech Architects, Wall Street / Banking Systems Veterans (50+ years experience), Quantitative Evaluators
+- **Viewport**: Native Titanium iPhone 16 Pro chassis with Apple Dynamic Island event dispatching, animated haptic touch cursor, and floating glass dock
 - **Visual Staging**: Pure Obsidian Dark (`#08090E` / `#161824`) with High-Contrast Diamond White Typography (`#FFFFFF`) and Electric Mint Telemetry (`#10B981`)
-- **Device Viewport**: Native Titanium iPhone 16 Pro Chassis with Dynamic Island Event Dispatching, Animated Haptic Touch Cursor, and Floating Glass Dock
 
 ---
 
-## 🧭 EXECUTIVE TIMING SUMMARY
-| Scene | Architectural Domain | Duration | Remotion Frame Range | Timecode |
+## 🧭 Master Architecture & Tech Stack Matrix
+
+| Scene | Timecode | Feature Demonstrated | Tech Stack Applied | Core Engineering Skills Highlighted |
 |---|---|---|---|---|
-| **Scene 1** | Local-First Topology, Integer Arithmetic & Zero-Cloud Privacy | 30s | Frames `0` → `900` | `[00:00 - 00:30]` |
-| **Scene 2** | Continuous Liquidity Velocity, Autonomous SMS Ingestion & Goal Ripple | 45s | Frames `900` → `2250` | `[00:30 - 01:15]` |
-| **Scene 3** | Pacioli Double-Entry Register (Table 1), Deterministic Rule Replay & Creep | 45s | Frames `2250` → `3600` | `[01:15 - 02:00]` |
-| **Scene 4** | 365-Day Stochastic Monte Carlo Engine (CRN), Confidence Cones & Reverse CTC | 45s | Frames `3600` → `4950` | `[02:00 - 02:45]` |
-| **Scene 5** | Quantized On-Device SLM & 3-Layer SEBI Regulatory Firewall | 30s | Frames `4950` → `5850` | `[02:45 - 03:15]` |
-| **Scene 6** | Open-Source Core, MIT License & Verification Outro | 15s | Frames `5850` → `6300` | `[03:15 - 03:30]` |
-| **Total** | **Full System Demonstration** | **3m 30s** | **6,300 Frames** | **`03:30`** |
+| **Scene 1** | `[00:00 - 00:30]` | App Launch, Philosophy & Phone Viewport | React 18, TypeScript, Vite, Remotion SDK, CSS Design Tokens | Local-First Architecture, Zero-Cloud Privacy Sandboxing, Integer-Paise Precision |
+| **Scene 2** | `[00:30 - 01:15]` | Overview Screen, SMS Sync & Goal Ripple | FastAPI, Pydantic v2, Python `re`, Levenshtein Distance, CSS Transitions | High-Frequency Event Ingestion, Dynamic Island Dispatching, Continuous Liquidity Velocity Modeling |
+| **Scene 3** | `[01:15 - 02:00]` | Table 1 Ledger, Rule Replay & Creep | SQLite (WAL mode), ACID Transactions, Foreign Keys, Python Dataclasses | Double-Entry Accounting Invariants, Deterministic Rule Engine, Retroactive Replay Cascades, Statistical Creep Detection |
+| **Scene 4** | `[02:00 - 02:45]` | 365-Day Monte Carlo & Reverse Tax Solver | NumPy Vectorized Kernels, Common Random Numbers (CRN), SVG Bézier Paths | Stochastic Financial Modeling, Variance Reduction (CRN), Empirical Percentile Funnels, Inverse Numerical Optimization |
+| **Scene 5** | `[02:45 - 03:15]` | Guarded AI Financial Coach | Ollama Edge Runtime, Quantized Qwen 2.5 7B (4-bit GGUF), RegEx Intent Filters | Edge SLM Inference, Context Window Sanitization, Regulatory Circuit-Breaker (SEBI Compliance) |
+| **Scene 6** | `[03:15 - 03:30]` | Outro & Open Source Callout | Git CLI, GitHub Monorepo, MIT License | Production Monorepo Engineering, Open-Source Governance, Full-Stack System Integration |
 
 ---
 
-## 🎬 SCENE 1: ARCHITECTURAL FOUNDATION & LOCAL-FIRST TOPOLOGY
+## 🎬 Word-for-Word Voiceover Script with Tech Stack & Skills Callouts
+
+---
+
+### SCENE 1: Architectural Foundation & Local-First Topology
 - **Timecode**: `[00:00 - 00:30]` (30 Seconds / Frames `0` to `900`)
 - **Remotion Choreography**:
-  - `[00:00 - 00:04]`: Titanium smartphone chassis rises in smooth 3D perspective against an obsidian black backdrop (`#08090E`). Specular edge lighting outlines the display.
-  - `[00:04 - 00:07]`: The luminous PulseLedger monogram (`⚡`) pulses with neon emerald ambient backlighting. Subtitle displays: `● Initializing Local Sandbox...`.
+  - `[00:00 - 00:04]`: Titanium smartphone chassis rises in 3D perspective against an obsidian black backdrop (`#08090E`). Specular edge lighting defines the physical phone.
+  - `[00:04 - 00:07]`: The neon green PulseLedger monogram (`⚡`) pulses. Badge reads: `● Initializing Local Sandbox...`.
   - `[00:07 - 00:10]`: At Frame 120 (4.0s), the splash screen unlocks into the live Aarav mobile overview interface.
-  - `[00:10 - 00:30]`: Right presentation panel displays 100% diamond white headers and high-contrast cards: *Zero-Cloud Privacy*, *Integer-Paise Math*, *365-Day Monte Carlo*, *SEBI-Guarded Local SLM*.
+  - `[00:10 - 00:30]`: Right presentation panel displays high-contrast highlights: *Zero-Cloud Privacy*, *Integer-Paise Math*, *365-Day Monte Carlo*, *SEBI-Guarded Local SLM*.
 
-### 🎙️ Spoken Narration Script:
-> *(Tone: Grounded, authoritative, institutional gravitas. No hype — pure engineering clarity.)*
+#### 🎙️ Spoken Voiceover Narration:
+> *(Tone: Grounded, authoritative, institutional gravitas.)*
 >
 > "This is **PulseLedger** — an autonomous personal finance workstation engineered for absolute data sovereignty, mathematical precision, and low-latency financial intelligence.
 >
-> Unlike legacy fintech architectures that exfiltrate sensitive banking telemetry to vulnerable third-party multi-tenant clouds, PulseLedger operates on a strict **local-first, zero-cloud execution model**. 
+> On the frontend, our interface is built using **React 18, TypeScript, and Vite**, rendered here through **Remotion’s programmatic video engine** with sub-pixel spring physics and custom CSS design tokens optimized for OLED mobile displays.
 >
-> Every ledger register, transaction reconciliation, stochastic trajectory, and AI inference executes natively on-device inside a zero-telemetry SQLite and NumPy sandbox.
+> Unlike legacy fintech architectures that exfiltrate sensitive banking telemetry to vulnerable multi-tenant clouds, PulseLedger operates on a strict **local-first, zero-cloud execution model**. Every register, stochastic trajectory, and AI inference runs natively on-device inside a local **SQLite and Python sandbox**.
 >
-> Most importantly, to guarantee institutional compliance and eliminate IEEE-754 floating-point rounding drift, every monetary balance is strictly maintained in **64-bit integer paise**. 
+> Most importantly, demonstrating our commitment to institutional accounting standards, we eliminate IEEE-754 floating-point drift entirely by enforcing strict **64-bit integer paise precision** across our entire data pipeline.
 >
 > Let us walk through the four core pillars of the live mobile workstation."
 
 ---
 
-## 🎬 SCENE 2: CONTINUOUS LIQUIDITY VELOCITY & REAL-TIME SMS INGESTION
+### SCENE 2: Continuous Liquidity Velocity & Real-Time SMS Ingestion
 - **Timecode**: `[00:30 - 01:15]` (45 Seconds / Frames `900` to `2250`)
 - **Remotion Choreography**:
   - `[00:30 - 00:36]`: Overview screen active. Focus on the central **Autonomous Safe-to-Spend Dial** showing `₹3,447` with dynamic status: `● Velocity Healthy (₹1,553 spent / ₹5,000 allowance)`.
-  - `[00:36 - 00:43]`: At Frame 50 of the scene, the **Apple Dynamic Island** expands smoothly downward. A bank push card drops: `Bank SMS: ₹140 Swiggy • Canara Bank • Parsed into Food category`.
-  - `[00:43 - 00:50]`: Animated touch cursor navigates to the Dynamic Island banner, taps it to dismiss; the Safe-to-Spend dial re-indexes from `₹3,587` down to `₹3,447` in real-time.
+  - `[00:36 - 00:43]`: At Frame 50 of the scene, the **Apple Dynamic Island** expands smoothly downward. A bank push notification card drops: `Bank SMS: ₹140 Swiggy • Canara Bank • Parsed into Food category`.
+  - `[00:43 - 00:50]`: Animated touch cursor navigates to the Dynamic Island banner, taps it to dismiss; the Safe-to-Spend dial re-indexes from `₹3,587` down to `₹3,447` in real time.
   - `[00:50 - 01:03]`: Touch cursor descends to the **Simulate Discretionary Spend** input, keys in `₹1,200` *(Dinner with Friends)*, and taps the neon green **Ripple** button.
   - `[01:03 - 01:15]`: An amber card smoothly expands: `⚠️ GOAL RIPPLE DELAY FORECAST: This ₹1,200 spend shifts your Laptop Fund goal by approximately 2 days.` Touch cursor transitions toward the bottom floating dock.
 
-### 🎙️ Spoken Narration Script:
-> *(Tone: Dynamic, analytical, highlighting algorithmic innovation over conventional budgeting.)*
+#### 🎙️ Spoken Voiceover Narration:
+> *(Tone: Dynamic, analytical, highlighting algorithmic innovation and backend architecture.)*
 >
-> "We begin on the **Overview dashboard**, which replaces arbitrary, static monthly budgeting with **Continuous Liquidity Velocity**.
+> "We begin on the **Overview dashboard**, which replaces arbitrary monthly budgets with **Continuous Liquidity Velocity**.
 >
-> Traditional envelope budgets collapse because they fail to model real-world cash flow dynamics. PulseLedger continuously solves for your instantaneous **Safe-to-Spend limit**, dynamically amortizing fixed commitments, upcoming billing obligations, and reserve buffer thresholds across your cash horizon.
+> Leveraging an asynchronous **FastAPI** backend with strict **Pydantic v2 validation**, PulseLedger solves for your instantaneous **Safe-to-Spend limit**, continuously amortizing upcoming recurring liabilities and buffer reserves across your cash horizon.
 >
-> Notice the top of the viewport: an unprompted bank transaction arrives. Our localized ingestion pipeline tokenizes incoming bank SMS messages via deterministic regular expressions and Levenshtein merchant distance matching — extracting payee, account tail, and debit amount in under eight milliseconds, with zero network egress.
+> Notice the top of the viewport: an unprompted bank transaction arrives. Our ingestion pipeline tokenizes incoming bank SMS messages using **compiled regular expressions and Levenshtein fuzzy distance matching** — extracting payee, account tail, and debit amount in under eight milliseconds with zero network egress.
 >
-> When evaluating discretionary capital outlays, our **Goal Ripple Engine** computes the marginal opportunity cost. Simulating a twelve-hundred rupee discretionary expense does not yield an unhelpful generic warning; instead, it models the exact perturbation vector against prioritized capital sinks — proving that this single dinner shifts Aarav’s laptop acquisition milestone by exactly forty-eight hours."
+> When evaluating discretionary capital outlays, our **Goal Ripple Engine** models marginal opportunity cost. Simulating a twelve-hundred rupee dinner does not yield an unhelpful generic warning; instead, our differential equation computes the exact perturbation vector against prioritized capital sinks — proving this single dinner shifts Aarav’s laptop acquisition milestone by exactly forty-eight hours."
 
 ---
 
-## 🎬 SCENE 3: AUDITED DOUBLE-ENTRY REGISTER (TABLE 1) & SELF-LEARNING RULEBOOK
+### SCENE 3: Audited Double-Entry Register (Table 1) & Self-Learning Rulebook
 - **Timecode**: `[01:15 - 02:00]` (45 Seconds / Frames `2250` to `3600`)
 - **Remotion Choreography**:
   - `[01:15 - 01:21]`: Touch cursor taps `Ledger` on the floating dock. Screen smoothly slides to **Financial Transaction Ledger (Table 1)**.
@@ -79,22 +84,22 @@
     - An instant green toast pops up: `✓ Deterministic Rule Learned: Chai Point → Food replayed across 8 historical transactions!`
   - `[01:45 - 02:00]`: Spotlight shifts to the second row: `Netflix India` highlighted with an orange warning chip: `⚠️ Price Creep +30.1% (₹499 → ₹649)`. Touch cursor glides toward the `Plan` dock icon.
 
-### 🎙️ Spoken Narration Script:
-> *(Tone: Technical, rigorous, emphasizing accounting purity and deterministic reproducibility.)*
+#### 🎙️ Spoken Voiceover Narration:
+> *(Tone: Technical, rigorous, emphasizing database engineering and accounting theory.)*
 >
-> "Navigating to the **Ledger**, we inspect **Table 1** — our fully audited, double-entry financial register adhering strictly to Pacioli balance invariants.
+> "Navigating to the **Ledger**, we inspect **Table 1** — an audited, double-entry financial register adhering strictly to **Pacioli balance invariants**.
 >
-> In institutional accounting, transaction integrity is paramount. Outflows and inflows are reconciled against integer accounts, ensuring that debits and credits maintain mathematical parity with zero float inaccuracy.
+> Backed by **SQLite with Write-Ahead Logging (WAL)** and full ACID transaction guarantees, every debit and credit is reconciled against normalized account schemas, ensuring zero state corruption even during sudden app termination.
 >
-> Rather than relying on non-deterministic cloud LLMs for transaction classification, PulseLedger deploys a **Self-Learning Deterministic Rule Engine**. 
+> Rather than relying on unpredictable cloud LLMs for transaction classification, PulseLedger deploys a **Deterministic Self-Learning Rule Engine**.
 >
-> When Aarav categorizes an ambiguous vendor — such as assigning Chai Point to Food — the system compiles an idempotent categorization rulebook entry and immediately triggers a retroactive cascade, reclassifying all historical occurrences across the database in sub-second execution time.
+> When Aarav categorizes an ambiguous vendor — such as assigning Chai Point to Food — the system compiles an idempotent categorization rule in memory and executes a retroactive SQL cascade, automatically reclassifying historical records in sub-second execution time.
 >
-> Simultaneously, our **Subscription Creep Heuristic** actively monitors recurring payment contracts. It automatically isolates step-function delta spikes — like this thirty-point-one percent price hike on Netflix — immediately surfacing stealth subscription inflation before it compounds against long-term liquidity."
+> Simultaneously, our **Subscription Creep Heuristic** actively monitors recurring payment contracts. It automatically detects step-function delta spikes — like this thirty-point-one percent price hike on Netflix — immediately surfacing stealth subscription inflation before it compounds against long-term liquidity."
 
 ---
 
-## 🎬 SCENE 4: 365-DAY MONTE CARLO STOCHASTIC ENGINE & REVERSE CTC SOLVER
+### SCENE 4: 365-Day Monte Carlo Stochastic Engine & Reverse CTC Solver
 - **Timecode**: `[02:00 - 02:45]` (45 Seconds / Frames `3600` to `4950`)
 - **Remotion Choreography**:
   - `[02:00 - 02:08]`: Touch cursor taps `Plan`. View slides into the **Plan & Stochastic Simulation** view.
@@ -110,26 +115,26 @@
     - The entire fan chart and central P50 trajectory smoothly elevate upward without jitter!
     - Risk cards update live: `Shortfall Risk: 0.0%`, `Buffer Breach Risk: 0.0%`.
   - `[02:32 - 02:40]`: Touch cursor drags the **Monthly Rent Change** slider to `-₹500` (`+₹6,000/yr impact`).
-  - `[02:40 - 02:45]`: Spotlight briefly covers the **Reverse Income Solver** configured for Bengaluru living tier (`1.25x`). Cursor moves to `Coach`.
+  - `[02:40 - 02:45]`: Spotlight covers the **Reverse Income Solver** configured for Bengaluru living tier (`1.25x`). Cursor moves to `Coach`.
 
-### 🎙️ Spoken Narration Script:
-> *(Tone: Quantitative, mathematically sophisticated, demonstrating predictive power.)*
+#### 🎙️ Spoken Voiceover Narration:
+> *(Tone: Quantitative, mathematically sophisticated, demonstrating high-performance computing.)*
 >
 > "Transitioning into the **Plan workstation**, we enter our high-throughput **Monte Carlo Stochastic Forecasting Engine**.
 >
-> Deterministic linear projections are fundamentally flawed because real cash flows exhibit daily variance, fat-tailed discretionary spikes, and irregular recurring commitments. PulseLedger executes **one thousand stochastic simulation paths across a three-hundred-and-sixty-five-day horizon** using NumPy.
+> Deterministic linear spreadsheets are fundamentally flawed because real cash flows exhibit log-normal expenditure variance and fat-tailed shocks. Demonstrating quantitative systems engineering, PulseLedger executes **one thousand stochastic simulation paths across a three-hundred-and-sixty-five-day horizon** using vectorized **NumPy kernels**.
 >
-> We anchor the simulation to Day Zero, generating a continuous confidence funnel: the outer tenth-to-ninetieth percentile corridor, the interquartile range, the central median trajectory, and our statutory liquidity floor.
+> We anchor the simulation to Day Zero, rendering an interactive SVG fan chart via cubic Bézier splines: the outer tenth-to-ninetieth percentile corridor, the interquartile range, the central median trajectory, and our statutory liquidity floor.
 >
-> Crucially, to eliminate visual sawtooth jitter during interactive what-if explorations, our engine enforces **Common Random Numbers (CRN)** variance reduction. 
+> Crucially, to eliminate visual sawtooth jitter during what-if explorations, our engine enforces **Common Random Numbers (CRN) variance reduction**. 
 >
-> Watch as I drag the discretionary dining slider by twenty percent: the pseudorandom seed is frozen across parameter sweeps, isolating the pure causal delta. The trajectory elevates smoothly in real-time, verifying a zero-percent shortfall probability.
+> Watch as I drag the discretionary dining slider: the pseudorandom seed matrix is frozen across parameter sweeps, isolating the pure causal delta. The trajectory elevates smoothly in real-time, verifying a zero-percent shortfall probability.
 >
-> Paired with our **Reverse Income Solver**, the system solves the inverse mathematical problem: computing the exact gross CTC required under Indian New Tax Regime slabs to sustain real lifestyle goals."
+> Paired with our **Reverse Income Solver**, we solve the inverse mathematical problem: computing the exact gross CTC required under Indian New Tax Regime Section 87A rebate slabs to sustain real lifestyle goals across Tier-One cities."
 
 ---
 
-## 🎬 SCENE 5: GUARDED LOCAL SLM & 3-LAYER SEBI REGULATORY FIREWALL
+### SCENE 5: Guarded Local SLM & 3-Layer SEBI Regulatory Firewall
 - **Timecode**: `[02:45 - 03:15]` (30 Seconds / Frames `4950` to `5850`)
 - **Remotion Choreography**:
   - `[02:45 - 02:51]`: Touch cursor taps `Coach`. Screen transitions to **Financial Coach (Guarded)**.
@@ -142,22 +147,22 @@
     - Subtitle: `Specific stock recommendations are strictly blocked under Indian SEBI regulations. PulseLedger provides cash-flow intelligence, not speculative trading advisory.`
     - Security Badge: `SEBI 3-Layer Firewall • VERIFIED`.
 
-### 🎙️ Spoken Narration Script:
-> *(Tone: Firm, principled, highlighting enterprise security and compliance excellence.)*
+#### 🎙️ Spoken Voiceover Narration:
+> *(Tone: Firm, principled, highlighting edge AI deployment and regulatory compliance engineering.)*
 >
 > "Finally, we examine the **AI Financial Coach**.
 >
-> PulseLedger deploys a quantized **Small Language Model** executing locally through Ollama. The model synthesizes answers directly from sanitized local ledger context — enabling queries like *'Can I afford dinner tonight?'* to receive grounded, mathematically precise answers in milliseconds.
+> Showcasing applied Edge AI engineering, PulseLedger deploys a **4-bit quantized Small Language Model — Qwen 2.5 7B** — running locally on-device through **Ollama**. The model synthesizes answers directly from sanitized SQLite ledger aggregates, enabling queries like *'Can I afford dinner tonight?'* to receive grounded, mathematically precise answers in milliseconds.
 >
-> However, deploying generative AI in finance requires uncompromised regulatory boundaries. We have built a deterministic **Three-Layer Compliance Firewall** aligning strictly with SEBI Research Analyst and Investment Adviser regulations.
+> However, deploying generative AI in finance requires uncompromising regulatory boundaries. We engineered a deterministic **Three-Layer Compliance Firewall** aligning strictly with **SEBI Research Analyst and Investment Adviser regulations**.
 >
-> When a user attempts to solicit speculative equities advice — such as testing *'Should I buy Reliance stock?'* — the pre-inference classifier intercepts the prompt instantly. 
+> When a user attempts to solicit speculative equities advice — such as testing *'Should I buy Reliance stock?'* — our pre-inference gateway intercepts the prompt in under two milliseconds. 
 >
-> The request is blocked at the gateway with an immutable regulatory notice, guaranteeing that PulseLedger delivers disciplined cash-flow intelligence without ever crossing into unlicensed algorithmic financial advisory."
+> The request is blocked before LLM execution, surfacing an audited regulatory notice that guarantees PulseLedger delivers disciplined cash-flow intelligence without ever crossing into unlicensed algorithmic advisory."
 
 ---
 
-## 🎬 SCENE 6: ARCHITECTURAL SUMMARY & OPEN-SOURCE VERIFICATION
+### SCENE 6: Architectural Summary & Open-Source Verification
 - **Timecode**: `[03:15 - 03:30]` (15 Seconds / Frames `5850` to `6300`)
 - **Remotion Choreography**:
   - `[03:15 - 03:22]`: Smartphone rotates smoothly in 3D isometric perspective, highlighting its pure obsidian dark shell, green status telemetry, and floating dock.
@@ -167,47 +172,31 @@
     - GitHub Card: `https://github.com/mittalshreya25-cpu/PulseLedger.git`
     - License: `MIT License`
     - Maintainer: `mittalshreya2517@gmail.com`
-    - Production Stack: `React 18 • Vite • FastAPI • NumPy • SQLite • Ollama SLM`
+    - Production Stack: `React 18 • TypeScript • Vite • FastAPI • SQLite • NumPy • Ollama SLM • Remotion`
 
-### 🎙️ Spoken Narration Script:
+#### 🎙️ Spoken Voiceover Narration:
 > *(Tone: Commanding, proud, memorable closing statement.)*
 >
-> "Engineered from the ground up as a native mobile experience, PulseLedger unites institutional double-entry rigour, stochastic simulation, and private local machine intelligence in the palm of your hand.
+> "Engineered from the ground up as a native mobile experience, PulseLedger unites institutional double-entry rigour, high-performance stochastic simulation, and private local machine intelligence in the palm of your hand.
 >
-> Mathematically audited, zero-cloud dependency, fully compliant, and built for real life.
+> Powered by React, Vite, FastAPI, NumPy, SQLite, Ollama, and Remotion — mathematically audited, zero-cloud dependency, fully compliant, and built for real life.
 >
-> The entire codebase, test suites, and simulation engines are open-source on GitHub under the MIT License.
+> The entire monorepo, test suites, and simulation engines are open-source on GitHub under the MIT License.
 >
 > Thank you."
 
 ---
 
-## 🏛️ APPENDIX: TECHNICAL DEFENSE & MATHEMATICAL FORMULATIONS
-*(For Senior Reviewers, Chief Architects & Investment Committee Q&A)*
+## 🏛️ Senior Evaluator Technical Reference
+*(Quick-reference summary for live Q&A defense)*
 
-### 1. The Integer-Paise Precision Guarantee
-$$\text{Balance}_{\text{paise}} \in \mathbb{Z}, \quad \text{Balance}_{\text{INR}} = \frac{\text{Balance}_{\text{paise}}}{100}$$
-- **Problem**: In IEEE 754 floating point arithmetic (`float64` / `double`), $0.1 + 0.2 = 0.30000000000000004$. Over millions of ledger entries, floating-point accumulator drift produces reconciliation discrepancies that fail statutory bank audits.
-- **PulseLedger Solution**: All balances, debits, credits, and buffers are stored and manipulated as 64-bit signed integers representing base sub-units (paise). Fractional values are rejected at the Pydantic API boundary. Floating point conversions occur strictly at the presentation formatting layer (`Intl.NumberFormat`).
-
-### 2. Common Random Numbers (CRN) in Monte Carlo Simulation
-$$\Delta \hat{Y} = \frac{1}{M} \sum_{m=1}^{M} \left[ g(X_m; \theta_1) - g(X_m; \theta_0) \right]$$
-- **Problem**: When evaluating what-if policy scenarios (e.g., varying dining expenditure by $\pm 10\%$), independent pseudorandom sampling introduces simulation variance $\text{Var}(\hat{Y}_1 - \hat{Y}_0) = \text{Var}(\hat{Y}_1) + \text{Var}(\hat{Y}_0) > 0$, causing jagged sawtooth curves where higher savings might randomly appear to yield lower wealth.
-- **PulseLedger Solution**: The simulation synchronizes pseudorandom seeds across parameter configurations using Common Random Numbers (CRN). The variance of the estimated difference becomes:
-  $$\text{Var}(\hat{Y}_1 - \hat{Y}_0) = \text{Var}(\hat{Y}_1) + \text{Var}(\hat{Y}_0) - 2\text{Cov}(\hat{Y}_1, \hat{Y}_2)$$
-  Because the random draws are identical, $\text{Cov}(\hat{Y}_1, \hat{Y}_2) \gg 0$, drastically reducing variance and yielding silky-smooth, monotonic sensitivity curves.
-
-### 3. Continuous Safe-to-Spend Formulation
-$$S_{\text{daily}}(t) = \max\left( 0, \, \frac{B(t) - \mathcal{R}_{\text{reserve}} - \sum_{i} L_i \cdot \mathbf{1}_{\{t \le \tau_i \le t + H\}}}{H} \right)$$
-- Where:
-  - $B(t)$: Current liquid cash balance in integer paise.
-  - $\mathcal{R}_{\text{reserve}}$: Immutable emergency buffer floor (e.g., ₹20,000.00).
-  - $L_i$: Mandatory recurring liability $i$ (rent, loan EMI, fixed utilities) due at timestamp $\tau_i$.
-  - $H$: Discretionary planning horizon (days remaining in active liquidity cycle).
-
-### 4. Regulatory Firewall Architecture (SEBI Mandate Alignment)
-- **Applicable Statutes**: Securities and Exchange Board of India (Investment Advisers) Regulations, 2013 and (Research Analysts) Regulations, 2014.
-- **Enforcement Pipeline**:
-  1. **Pre-Inference RegEx & Keyword Gatekeeper**: Scans inbound prompt embeddings for intent markers (`buy`, `sell`, `target price`, `penny stock`, `crypto call`, `NSE/BSE tickers`).
-  2. **Interception Circuit-Breaker**: If classified as advisory solicitation, LLM invocation is short-circuited; an audited, deterministic compliance rejection payload is returned in $<1\text{ms}$.
-  3. **Data Sanitization**: PII, account numbers, and exact bank balances are stripped or tokenized before entering model context windows.
+1. **Integer Arithmetic vs Float Precision**:
+   - $\text{Balance} \in \mathbb{Z}_{\text{paise}}$. Storing currency as 64-bit integer paise guarantees exact balance equality ($\sum \text{Dr} \equiv \sum \text{Cr}$), eliminating the IEEE-754 binary floating point precision leakage inherent in standard web apps.
+2. **Variance Reduction via Common Random Numbers**:
+   - Applying CRN fixes the pseudorandom matrix across slider state changes:
+     $$\text{Var}(\Delta \hat{Y}) = \text{Var}(\hat{Y}_1) + \text{Var}(\hat{Y}_0) - 2\text{Cov}(\hat{Y}_1, \hat{Y}_2)$$
+     Because $\text{Cov}(\hat{Y}_1, \hat{Y}_2) \gg 0$, interactive sensitivity curves elevate smoothly with zero stochastic chatter.
+3. **Continuous Safe-to-Spend Differential**:
+   - $S_{\text{daily}}(t) = \max\left( 0, \, \frac{B(t) - \mathcal{R}_{\text{reserve}} - \sum L_i}{H} \right)$, dynamically recalculated upon every bank SMS event.
+4. **Regulatory Circuit-Breaker**:
+   - Hardcoded deterministic AST/regex intent filtering enforcing **SEBI (Investment Advisers) Regulations, 2013** and **SEBI (Research Analysts) Regulations, 2014**, operating at the gateway layer before any model tokenization occurs.
