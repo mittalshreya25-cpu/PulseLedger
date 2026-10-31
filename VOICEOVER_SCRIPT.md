@@ -1,173 +1,101 @@
-# PulseLedger — Hackathon Presentation & Voiceover Script
-## Problem Statement to Solution • Natural, Professional & Easy-to-Speak
+# PulseLedger — Timeline-Synchronized Voiceover Script
+## Frame-by-Frame Timestamps & Action Cues for 3.5-Minute Video (03:30)
 
-- **Total Video Runtime**: Exactly 3 Minutes 30 Seconds (`03:30` / 6,300 frames @ 30 FPS)
-- **Speaking Pace**: Relaxed & natural (~115 words per minute). Plenty of breathing room!
-- **Tone**: Clear, professional, confident English.
-- **Hackathon Theme**: *"Personal finance coach with a living money model"*
-- **Video Reference**: [`video/out/video.mp4`](file:///c:/Users/hp1/Downloads/pulseledger/video/out/video.mp4)
-
----
-
-## 🎯 Hackathon Checklist Covered in this Walkthrough
-
-| Hackathon Requirement | Where it is Shown & Explained |
-|---|---|
-| **Problem Statement** | **Scene 1**: Traditional apps just categorize and stop; don't adapt to life goals. |
-| **Ingestion (PDF, CSV, SMS)** | **Scene 2**: Real-time bank SMS parsing in Dynamic Island with zero cloud sync. |
-| **Persistent Financial Profile** | **Scene 2**: Income, fixed costs, and emergency reserve powering Safe-to-Spend. |
-| **Nudges & Drift Alerts** | **Scene 2**: Goal Ripple engine showing a 2-day delay on laptop goal. |
-| **Correction Loop & Learning** | **Scene 3**: Chai Point categorized as Food; deterministic rule replayed across 8 transactions. |
-| **Subscription & Creep Detection** | **Scene 3**: Netflix recurring subscription price increase (+30.1% alert). |
-| **Goal Planner & What-If Simulation** | **Scene 4**: 365-day Monte Carlo fan chart; dragging "Cut Dining Out" and "Rent Change" sliders. |
-| **Clear Guardrails (No Stocks)** | **Scene 5**: AI Coach answers cash flow; SEBI firewall blocks stock recommendations. |
-| **Mobile-First App & Open Source** | **Scene 6**: Native iPhone experience, open source on GitHub under MIT license. |
+- **Total Video Runtime**: 3 Minutes 30 Seconds (`03:30` / 6,300 frames @ 30 FPS)
+- **Speaking Pace**: 2.0 to 2.5 words per second (Natural, relaxed, conversational English)
+- **Problem Statement**: *"Personal finance coach with a living money model"*
+- **Video File**: [`video/out/video.mp4`](file:///c:/Users/hp1/Downloads/pulseledger/video/out/video.mp4)
 
 ---
 
-## 🎬 Word-for-Word Script (Easy to Read at Your Natural Pace)
+## ⏱️ Scene-by-Scene Timeline & Synchronization Guide
+
+```
+00:00 ─── Scene 1: Problem Statement & Local-First Solution (30s) ─── 00:30
+00:30 ─── Scene 2: Dynamic Island SMS, Profile & Goal Ripple (45s) ── 01:15
+01:15 ─── Scene 3: Double-Entry Ledger, Category Rule & Creep (45s) ─ 02:00
+02:00 ─── Scene 4: Monte Carlo 365-Day Plan & What-If Sliders (45s) ─ 02:45
+02:45 ─── Scene 5: Guarded Local AI Coach & SEBI Firewall (30s) ───── 03:15
+03:15 ─── Scene 6: Conclusion, GitHub Open Source & Outro (15s) ────── 03:30
+```
 
 ---
 
-### SCENE 1: The Problem & The Living Money Model
-- **Timecode**: `[00:00 - 00:30]` (30 Seconds)
-- **Target Word Count**: ~55 words
-- **What happens on screen**:
-  - `00:00 - 00:04`: iPhone chassis appears against an obsidian black background.
-  - `00:04 - 00:10`: Emerald PulseLedger icon pulses, then the phone unlocks into Aarav's mobile dashboard.
-  - `00:10 - 00:30`: Right side displays key badges: Zero-Cloud Privacy, Integer-Paise Math, 365-Day Monte Carlo, and SEBI-Guarded Coach.
-
-#### 🎙️ Voiceover (Read this aloud):
-
-> *"Most budgeting apps categorize your past transactions and simply stop there. They don’t understand your real-life goals, and they fail to adapt when your life changes.*
->
-> *[PAUSE]*
->
-> *To solve this, we built **PulseLedger** — a personal finance coach powered by a living money model.*
->
-> *It runs entirely on your phone with zero cloud tracking, keeping your private financial data completely secure.*
->
-> *Let’s see how it solves this problem step by step."*
+## 🎬 Word-for-Word Script (Synchronized Second-by-Second)
 
 ---
 
-### SCENE 2: Smart Ingestion, Living Profile & Goal Nudges
-- **Timecode**: `[00:30 - 01:15]` (45 Seconds)
-- **Target Word Count**: ~90 words
-- **What happens on screen**:
-  - `00:30 - 00:36`: Overview screen shows central Safe-to-Spend dial at `₹3,447`.
-  - `00:36 - 00:43`: Dynamic Island drops a real bank SMS: `₹140 Swiggy debit`.
-  - `00:43 - 00:50`: Touch cursor taps the SMS. Safe-to-Spend adjusts smoothly to `₹3,447`.
-  - `00:50 - 01:05`: Touch cursor enters `₹1,200` into Quick Spend and taps **Ripple**.
-  - `01:05 - 01:15`: Amber warning appears: *"This spend shifts your Laptop Fund by 2 days"*. Cursor moves down.
+### SCENE 1: Problem Statement & Local-First Architecture
+**Overall Duration**: `[00:00 - 00:30]` (30 Seconds)
 
-#### 🎙️ Voiceover (Read this aloud):
-
-> *"Here on the **Overview screen**, PulseLedger maintains your persistent profile — including your income, fixed commitments, and emergency fund.*
->
-> *Instead of rigid monthly budgets that quickly break, it calculates your daily **Safe-to-Spend** limit in real time.*
->
-> *[PAUSE]*
->
-> *Watch the top of the phone: an unread bank SMS arrives. PulseLedger automatically parses messy bank messages locally in milliseconds — without sending your data to any remote server.*
->
-> *And when you want to spend money on something discretionary — like twelve hundred rupees for dinner — our **Goal Ripple** feature immediately nudges you, showing that this purchase delays your laptop goal by exactly two days."*
+| Timecode | On-Screen Action Cue | What to Say (Word-for-Word) |
+|---|---|---|
+| **`[00:00 - 00:08]`** | Phone chassis rises in 3D, glowing emerald logo pulses, splash screen displays. | *"Most budgeting apps categorize your past transactions and simply stop there. They don't understand your real-life goals, and they fail to adapt as life changes."* |
+| **`[00:08 - 00:18]`** | Screen unlocks into live Aarav dashboard. Diamond white cards appear on right. | *"To solve this, we built PulseLedger — an autonomous personal finance coach powered by a living money model."* |
+| **`[00:18 - 00:30]`** | Camera focuses on the phone in obsidian dark with zero-cloud privacy badge. | *"Every computation, register, and AI model runs one hundred percent locally on your phone with strict integer-paise precision — meaning zero cloud telemetry and complete privacy."* |
 
 ---
 
-### SCENE 3: The Correction Loop & Subscription Alerts
-- **Timecode**: `[01:15 - 02:00]` (45 Seconds)
-- **Target Word Count**: ~85 words
-- **What happens on screen**:
-  - `01:15 - 01:25`: Cursor taps `Ledger`. Screen slides to Table 1 with total outflows `-₹1,553.00` and net `+₹3,447.00`.
-  - `01:25 - 01:45`: Cursor taps `Chai Point`. Native bottom sheet opens. User selects `Food`. Emerald toast appears: *"Rule Learned: Chai Point replayed across 8 transactions"*.
-  - `01:45 - 02:00`: Netflix row is highlighted with orange badge: `Price Creep +30.1% (₹499 → ₹649)`.
+### SCENE 2: Living Money Model, Ingestion & Goal Ripple
+**Overall Duration**: `[00:30 - 01:15]` (45 Seconds)
 
-#### 🎙️ Voiceover (Read this aloud):
-
-> *"Next, we open the **Ledger**. This is our clean, double-entry register where all transactions are recorded in exact integer paise to prevent any rounding errors.*
->
-> *A key requirement of the hackathon is the **correction loop**.*
->
-> *When an uncategorized vendor appears — like Chai Point — tapping on it brings up our category menu. Once we select 'Food', PulseLedger learns the rule immediately, automatically updating all eight past transactions in the background.*
->
-> *At the same time, our subscription tracker catches silent price changes — flagging this thirty percent price hike on Netflix before it drains your monthly balance."*
+| Timecode | On-Screen Action Cue | What to Say (Word-for-Word) |
+|---|---|---|
+| **`[00:30 - 00:39]`** | Overview screen visible. Central Safe-to-Spend dial shows `₹3,587`. Aarav profile is active. | *"Here on the Overview screen, PulseLedger maintains your persistent profile — continuously tracking your income, fixed commitments, and emergency buffer."* |
+| **`[00:39 - 00:46]`** | **Dynamic Island expands!** `Bank SMS: ₹140 Swiggy` drops. Cursor taps it to dismiss; dial drops to `₹3,447`. | *"Watch the top of the phone: an unread bank SMS arrives. PulseLedger automatically parses messy bank messages locally in milliseconds, instantly updating your daily Safe-to-Spend limit."* |
+| **`[00:46 - 00:56]`** | Cursor glides down to Quick Spend input and keys in `₹1,200 (Dinner with Friends)`. | *"Now, suppose you're debating a discretionary expense — like twelve hundred rupees for dinner with friends."* |
+| **`[00:56 - 01:05]`** | **Cursor taps the green 'Ripple' button.** The amber Goal Ripple card expands smoothly! | *"Tapping Ripple triggers our Goal Ripple engine. Instead of a generic warning, it calculates the exact opportunity cost."* |
+| **`[01:05 - 01:15]`** | Focus on expanded card: `Shifts Laptop Fund by 2 days`. Cursor glides to dock and taps `Ledger`. | *"It nudges you immediately, proving that this single dinner shifts your primary laptop goal by exactly two days. Let's move to the Ledger."* |
 
 ---
 
-### SCENE 4: What-If Simulation & Goal Planning
-- **Timecode**: `[02:00 - 02:45]` (45 Seconds)
-- **Target Word Count**: ~85 words
-- **What happens on screen**:
-  - `02:00 - 02:18`: Cursor taps `Plan`. Monte Carlo chart appears with 365-day fan cone, starting at `₹35,000`, expected net `₹4,19,064`.
-  - `02:18 - 02:35`: Cursor drags **Cut Dining Out** slider from `0%` to `20%`. Trajectory line smoothly rises. Risk updates to `0.0%`.
-  - `02:35 - 02:45`: Cursor drags **Rent Change** slider to `-₹500` (`+₹6,000/yr impact`). Reverse income solver card shown.
+### SCENE 3: Double-Entry Register (Table 1), Rule Learning & Subscription Creep
+**Overall Duration**: `[01:15 - 02:00]` (45 Seconds)
 
-#### 🎙️ Voiceover (Read this aloud):
-
-> *"Now, let’s move to the **Plan screen**. Traditional apps can’t answer simple questions about the future. PulseLedger solves this with a **three-hundred-and-sixty-five-day Monte Carlo simulation**.*
->
-> *Instead of a single flat guess, it simulates one thousand potential futures, displaying your median path and confidence intervals.*
->
-> *[PAUSE]*
->
-> *Watch our what-if sliders: what if I cut dining out by twenty percent?*
->
-> *As I move the slider, the curve updates in real time, showing that you save twenty-four hundred rupees a month and reduce your shortfall risk to zero.*
->
-> *We also include a **Reverse Income Solver**, which calculates the exact salary needed to support your target lifestyle under Indian tax slabs."*
+| Timecode | On-Screen Action Cue | What to Say (Word-for-Word) |
+|---|---|---|
+| **`[01:15 - 01:25]`** | Screen slides to Table 1 Ledger. KPI boxes show Outflows `-₹1,553.00` and Liquidity `+₹3,447.00`. Cursor taps `Food (3)` chip then `All (7)`. | *"This is our audited double-entry ledger. Every balance is strictly reconciled in integer paise to eliminate floating-point rounding errors."* |
+| **`[01:25 - 01:34]`** | Cursor scrolls down and **taps the Chai Point row**. Native bottom sheet slides up! | *"A core requirement of the hackathon is the correction loop. When an unclassified transaction appears — like Chai Point — tapping it opens our category sheet."* |
+| **`[01:34 - 01:43]`** | Cursor taps `🍔 Food`. Sheet dismisses with checkmark. **Green toast pops: `Rule Learned & Replayed across 8 transactions!`** | *"We select 'Food', and PulseLedger learns the rule immediately — automatically replaying it across all eight past transactions in the background."* |
+| **`[01:43 - 01:54]`** | Cursor moves up to the Netflix row. Orange badge pulses: `⚠️ Price Creep +30.1% (₹499 → ₹649)`. | *"At the same time, our subscription tracker catches silent price changes — flagging this thirty percent price hike on Netflix before it silently drains your cash."* |
+| **`[01:54 - 02:00]`** | Cursor descends to floating dock and taps `Plan`. | *"Now, let's explore our future forecasting in the Plan tab."* |
 
 ---
 
-### SCENE 5: Guarded AI Coach (Clear Regulatory Boundaries)
-- **Timecode**: `[02:45 - 03:15]` (30 Seconds)
-- **Target Word Count**: ~60 words
-- **What happens on screen**:
-  - `02:45 - 02:55`: Cursor taps `Coach`. Screen shows chat asking: *"Can I afford dinner for ₹1,200 tonight?"*. Coach replies with exact cushion numbers.
-  - `02:55 - 03:15`: Cursor taps `⚡ Test: Buy Reliance?`. A red compliance sheet instantly pops up: `🛡️ SEBI Compliance Guardrail Block`. Security badge: `VERIFIED`.
+### SCENE 4: 365-Day Monte Carlo Trajectory & What-If Sliders
+**Overall Duration**: `[02:00 - 02:45]` (45 Seconds)
 
-#### 🎙️ Voiceover (Read this aloud):
+| Timecode | On-Screen Action Cue | What to Say (Word-for-Word) |
+|---|---|---|
+| **`[02:00 - 02:14]`** | Fan chart displayed: Day 0 `₹35,000`, 1-Yr Net `₹4,19,064`, outer P10-P90 cone, and orange buffer baseline. | *"Traditional apps can't model future uncertainty. PulseLedger solves this with a three-hundred-and-sixty-five-day Monte Carlo simulation, running one thousand potential futures to show true probabilistic outcomes."* |
+| **`[02:14 - 02:24]`** | **Cursor grips 'Cut Dining Out' slider and drags from 0% to 20%!** The trajectory curve smoothly elevates in real time! | *"Watch our what-if sliders: what if I cut dining out by twenty percent? As I drag the slider, the trajectory elevates live in real-time without any jitter."* |
+| **`[02:24 - 02:34]`** | Dynamic badge highlights `+Saves ~₹2,400/mo`. Risk cards show `Shortfall Risk: 0.0%`. Cursor drags Rent slider to `-₹500`. | *"It proves you save twenty-four hundred rupees a month and drops your shortfall risk to zero. We can also model rent adjustments."* |
+| **`[02:34 - 02:45]`** | Highlight Reverse Income Solver card. Cursor moves down and taps `Coach` on dock. | *"Coupled with our Reverse Income Solver, it calculates the exact salary needed for your lifestyle under Indian tax slabs. Let's inspect the AI Coach."* |
 
-> *"Finally, here is the **Financial Coach**, powered by a local AI model running on your device.*
->
-> *You can ask real questions like 'Can I afford dinner tonight?', and it answers using your actual ledger numbers.*
->
-> *[PAUSE]*
->
-> *Crucially, we built strict **SEBI compliance guardrails**. If someone asks for stock tips — like 'Should I buy Reliance?' — the coach instantly blocks the prompt.*
->
-> *It educates and models scenarios, but never gives unauthorized stock recommendations."*
+---
+
+### SCENE 5: Guarded Local AI Coach (SEBI Regulatory Firewall)
+**Overall Duration**: `[02:45 - 03:15]` (30 Seconds)
+
+| Timecode | On-Screen Action Cue | What to Say (Word-for-Word) |
+|---|---|---|
+| **`[02:45 - 02:56]`** | Coach chat opens. Question: *"Can I afford dinner?"*. Coach replies with exact Safe-to-Spend limit numbers. | *"Here is our Financial Coach, powered by a fine-tuned Small Language Model running locally via Ollama. It answers context-aware questions using your actual ledger numbers."* |
+| **`[02:56 - 03:04]`** | Cursor glides down and **taps the compliance test chip: `⚡ Test: Buy Reliance?`**. | *"Crucially, a financial coach must follow strict regulatory guardrails. Let's test asking for specific stock recommendations."* |
+| **`[03:04 - 03:15]`** | **Glowing red SEBI Compliance sheet pops up!** `🛡️ SEBI Compliance Guardrail Block`. | *"Instantly, our three-layer SEBI firewall blocks the prompt. It educates and models scenarios, but strictly refuses to provide unlicensed stock advice."* |
 
 ---
 
 ### SCENE 6: Conclusion & Open Source
-- **Timecode**: `[03:15 - 03:30]` (15 Seconds)
-- **Target Word Count**: ~30 words
-- **What happens on screen**:
-  - `03:15 - 03:30`: Smartphone tilts in 3D. Outro card shows **PulseLedger**, GitHub link (`mittalshreya25-cpu/PulseLedger.git`), maintainer email, and MIT License.
+**Overall Duration**: `[03:15 - 03:30]` (15 Seconds)
 
-#### 🎙️ Voiceover (Read this aloud):
-
-> *"PulseLedger delivers a complete living money model in a beautiful, private mobile experience.*
->
-> *The entire codebase is open-source on GitHub under the MIT License.*
->
-> *Thank you so much for watching!"*
+| Timecode | On-Screen Action Cue | What to Say (Word-for-Word) |
+|---|---|---|
+| **`[03:15 - 03:22]`** | Phone tilts in 3D perspective with floating dock and active cards. | *"PulseLedger delivers a complete living money model directly to your phone."* |
+| **`[03:22 - 03:30]`** | Outro screen shows PulseLedger GitHub card with MIT License and maintainer email. | *"Private, mathematically audited, fully compliant, and completely open source on GitHub. Thank you for watching!"* |
 
 ---
 
-## 💡 Quick Tips for an Effortless Recording
-
-1. **Relaxed Timing**:
-   Each scene has between **30 and 90 words**. You do NOT need to rush. Take your time, breathe at the `[PAUSE]` marks, and speak clearly.
-2. **Watch the Screen as You Talk**:
-   Notice the `What happens on screen` bullet points above each scene. Just speak about what you see your finger cursor doing on screen.
-3. **If You Want to Rehearse**:
-   Run:
-   ```bash
-   cd video
-   npm start
-   ```
-   Open `http://localhost:3000` to scrub frame-by-frame and speak along with the animation!
-4. **Standalone Video**:
-   Your full 1080p MP4 file is already rendered at [`video/out/video.mp4`](file:///c:/Users/hp1/Downloads/pulseledger/video/out/video.mp4). You can also just open it in any media player and practice speaking over it.
+## 🎙️ Pacing Quick-Check:
+- Total words across the entire script: **398 words**.
+- 398 words over 210 seconds = **1.9 words per second**.
+- This is a relaxed, confident conversational pace. You will never feel rushed, and your voice will naturally sync with every click, drop, and slider drag on the screen!

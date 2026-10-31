@@ -9,52 +9,59 @@ export const Scene3Ledger: React.FC = () => {
 
   const enter = spring({ frame, fps, config: { damping: 15, stiffness: 80 } });
 
-  // Filter chip active state (frames 40-100 taps Food, then back to All)
-  const isFoodFilterActive = frame >= 60 && frame <= 110;
+  // Filter chip active state: taps Food at frame 180 (6s), reverts to All at frame 280 (9.3s)
+  const isFoodFilterActive = frame >= 180 && frame <= 280;
 
-  // Touch Cursor Timeline:
-  // Phase 1 (frames 30-70): Taps Food filter chip
-  // Phase 2 (frames 90-130): Taps All filter chip
-  // Phase 3 (frames 140-180): Taps Chai Point row
-  // Phase 4 (frames 200-240): Taps Food in bottom sheet
-  // Phase 5 (frames 330-380): Taps Plan on floating dock
+  // Touch Cursor Timeline paced across 45-second scene (1,350 frames):
+  // Phase 1 (frames 120-220, 4.0s - 7.3s): Taps Food filter chip
+  // Phase 2 (frames 230-310, 7.6s - 10.3s): Taps All filter chip
+  // Phase 3 (frames 360-480, 12.0s - 16.0s): Glides to Chai Point row, taps to open bottom sheet
+  // Phase 4 (frames 520-650, 17.3s - 21.6s): Taps Food category in bottom sheet
+  // Phase 5 (frames 760-980, 25.3s - 32.6s): Hovers over Netflix +30.1% Price Creep card
+  // Phase 6 (frames 1120-1320, 37.3s - 44.0s): Glides to bottom dock, taps Plan tab
   let cursorX = 200;
   let cursorY = 220;
   let isTapping = false;
 
-  if (frame < 80) {
-    cursorX = interpolate(frame, [30, 60], [200, 140], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [30, 60], [400, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 60 && frame <= 75;
-  } else if (frame < 140) {
-    cursorX = interpolate(frame, [90, 115], [140, 60], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [90, 115], [215, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 115 && frame <= 130;
-  } else if (frame < 200) {
-    cursorX = interpolate(frame, [140, 170], [60, 220], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [140, 170], [215, 410], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 170 && frame <= 190;
-  } else if (frame < 300) {
-    cursorX = interpolate(frame, [200, 230], [220, 200], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [200, 230], [410, 690], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 230 && frame <= 250;
+  if (frame < 230) {
+    cursorX = interpolate(frame, [120, 180], [200, 140], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [120, 180], [400, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 180 && frame <= 210;
+  } else if (frame < 330) {
+    cursorX = interpolate(frame, [230, 280], [140, 60], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [230, 280], [215, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 280 && frame <= 310;
+  } else if (frame < 520) {
+    cursorX = interpolate(frame, [360, 450], [60, 220], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [360, 450], [215, 410], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 450 && frame <= 480;
+  } else if (frame < 720) {
+    cursorX = interpolate(frame, [520, 610], [220, 200], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [520, 610], [410, 690], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 610 && frame <= 650;
+  } else if (frame < 1050) {
+    // Hovers over Netflix row and price creep alert
+    cursorX = interpolate(frame, [760, 860], [200, 220], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [760, 860], [690, 320], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = false;
   } else {
-    cursorX = interpolate(frame, [310, 350], [200, 250], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [310, 350], [690, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 350 && frame <= 380;
+    // Navigates to floating dock and taps Plan tab
+    cursorX = interpolate(frame, [1120, 1240], [220, 250], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [1120, 1240], [320, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 1240 && frame <= 1300;
   }
 
-  // Mobile bottom sheet opens at frame 180, closes at frame 260
+  // Mobile bottom sheet opens at frame 460 (15.3s), closes at frame 680 (22.6s)
   const sheetOpen = spring({
-    frame: frame - 180,
+    frame: frame - 460,
     fps,
     config: { damping: 14, stiffness: 85 },
   });
-  const showSheet = frame >= 180 && frame <= 265;
+  const showSheet = frame >= 460 && frame <= 690;
 
-  // Rule Learned Toast pops at frame 270
+  // Rule Learned Toast pops at frame 690 (23.0s) and stays through frame 1050 (35.0s)
   const toastPop = spring({
-    frame: frame - 265,
+    frame: frame - 690,
     fps,
     config: { damping: 12, stiffness: 80 },
   });
@@ -78,7 +85,7 @@ export const Scene3Ledger: React.FC = () => {
     >
       {/* Left: Interactive Phone Screen Operating Ledger */}
       <div style={{ transform: `scale(${enter})`, position: "relative" }}>
-        <PhoneMockup width={430} height={900} activeTab={frame >= 360 ? "plan" : "ledger"}>
+        <PhoneMockup width={430} height={900} activeTab={frame >= 1260 ? "plan" : "ledger"}>
           {/* Mobile Screen Content */}
           <div style={{ flex: 1, padding: "16px 18px", display: "flex", flexDirection: "column", gap: "12px", overflow: "hidden", position: "relative" }}>
             {/* Header */}

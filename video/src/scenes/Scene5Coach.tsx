@@ -9,14 +9,32 @@ export const Scene5Coach: React.FC = () => {
 
   const enter = spring({ frame, fps, config: { damping: 15, stiffness: 80 } });
 
-  // Touch cursor moves to "⚡ Test: Buy Reliance?" chip at frame 60, taps at frame 85
-  const cursorX = interpolate(frame, [30, 80], [210, 110], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const cursorY = interpolate(frame, [30, 80], [550, 680], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const isTapping = frame >= 80 && frame <= 100;
+  // Touch Cursor Timeline paced across 30-second scene (900 frames):
+  // Phase 1 (frames 0-360, 0s - 12.0s): Hovers over coach answers
+  // Phase 2 (frames 360-500, 12.0s - 16.6s): Moves to "⚡ Test: Buy Reliance?" chip, taps at frame 460-500
+  // Phase 3 (frames 520-900, 17.3s - 30.0s): Hovers over the red SEBI compliance guardrail sheet
+  let cursorX = 210;
+  let cursorY = 320;
+  let isTapping = false;
 
-  // Firewall Intervention Sheet pops at frame 105
+  if (frame < 360) {
+    cursorX = 210;
+    cursorY = 320;
+    isTapping = false;
+  } else if (frame < 520) {
+    cursorX = interpolate(frame, [380, 460], [210, 110], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [380, 460], [320, 680], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 460 && frame <= 500;
+  } else {
+    // Hovers over the red guardrail alert card
+    cursorX = interpolate(frame, [520, 600], [110, 200], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [520, 600], [680, 460], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = false;
+  }
+
+  // Firewall Intervention Sheet pops at frame 480 (16.0s)
   const firewallPop = spring({
-    frame: frame - 100,
+    frame: frame - 480,
     fps,
     config: { damping: 12, stiffness: 85 },
   });

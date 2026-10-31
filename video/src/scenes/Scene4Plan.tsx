@@ -9,37 +9,44 @@ export const Scene4Plan: React.FC = () => {
 
   const enter = spring({ frame, fps, config: { damping: 15, stiffness: 80 } });
 
-  // Touch Cursor Timeline:
-  // Phase 1 (frames 30-140): Drags "Cut Dining Out" slider from 0% to 20%
-  // Phase 2 (frames 170-250): Drags "Rent Change" slider to -₹500
-  // Phase 3 (frames 320-380): Taps "Coach" tab on floating dock
-  let cursorX = 120;
-  let cursorY = 560;
+  // Touch Cursor Timeline paced across 45-second scene (1,350 frames):
+  // Phase 1 (frames 400-680, 13.3s - 22.6s): Drags "Cut Dining Out" slider from 0% to 20%
+  // Phase 2 (frames 760-990, 25.3s - 33.0s): Drags "Rent Change" slider to -₹500
+  // Phase 3 (frames 1120-1320, 37.3s - 44.0s): Taps "Coach" tab on floating dock
+  let cursorX = 140;
+  let cursorY = 380;
   let isDragging = false;
   let sliderVal = 0;
   let rentSliderVal = 0;
 
-  if (frame < 160) {
-    sliderVal = interpolate(frame, [50, 130], [0, 20], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorX = interpolate(frame, [30, 50, 130], [120, 100, 260], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [30, 50, 130], [650, 560, 560], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isDragging = frame >= 50 && frame <= 135;
-  } else if (frame < 280) {
+  if (frame < 400) {
+    // Resting over the fan chart
+    cursorX = 140;
+    cursorY = 380;
+    sliderVal = 0;
+    rentSliderVal = 0;
+    isDragging = false;
+  } else if (frame < 720) {
+    sliderVal = interpolate(frame, [450, 650], [0, 20], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorX = interpolate(frame, [400, 450, 650], [140, 100, 260], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [400, 450, 650], [380, 560, 560], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isDragging = frame >= 450 && frame <= 660;
+  } else if (frame < 1050) {
     sliderVal = 20;
-    rentSliderVal = interpolate(frame, [190, 250], [0, -500], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorX = interpolate(frame, [160, 190, 250], [260, 180, 120], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [160, 190, 250], [560, 620, 620], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isDragging = frame >= 190 && frame <= 255;
+    rentSliderVal = interpolate(frame, [800, 960], [0, -500], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorX = interpolate(frame, [720, 800, 960], [260, 180, 120], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [720, 800, 960], [560, 620, 620], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isDragging = frame >= 800 && frame <= 970;
   } else {
     sliderVal = 20;
     rentSliderVal = -500;
-    cursorX = interpolate(frame, [290, 330], [120, 340], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [290, 330], [620, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isDragging = frame >= 330 && frame <= 360;
+    cursorX = interpolate(frame, [1050, 1220], [120, 340], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [1050, 1220], [620, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isDragging = frame >= 1220 && frame <= 1280;
   }
 
-  // Trajectory elevation reacting live to the slider drag
-  const trajectoryLift = interpolate(frame, [50, 130], [0, 22], {
+  // Trajectory elevation reacting live to the slider drag (15.0s - 21.6s)
+  const trajectoryLift = interpolate(frame, [450, 650], [0, 22], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -63,7 +70,7 @@ export const Scene4Plan: React.FC = () => {
     >
       {/* Left: Interactive Phone Screen Operating Monte Carlo Simulation */}
       <div style={{ transform: `scale(${enter})`, position: "relative" }}>
-        <PhoneMockup width={430} height={900} activeTab={frame >= 340 ? "coach" : "plan"}>
+        <PhoneMockup width={430} height={900} activeTab={frame >= 1260 ? "coach" : "plan"}>
           {/* Mobile Screen Content */}
           <div style={{ flex: 1, padding: "16px 18px", display: "flex", flexDirection: "column", gap: "10px", overflow: "hidden" }}>
             {/* Header */}

@@ -10,51 +10,63 @@ export const Scene2Overview: React.FC = () => {
   // Entrance
   const enter = spring({ frame, fps, config: { damping: 15, stiffness: 80 } });
 
-  // 1. Dynamic Island SMS Notification drops at frame 50, dismisses at frame 150
-  const showNotification = frame >= 50 && frame <= 160;
+  // 1. Dynamic Island SMS Notification drops at frame 300 (10.0s), dismisses at frame 560 (18.6s)
+  const showNotification = frame >= 300 && frame <= 560;
   const notifText = showNotification ? "Bank SMS: ₹140 Swiggy" : null;
   const notifSub = showNotification ? "Canara Bank • Parsed into Food category" : null;
 
-  // 2. Safe-to-Spend value animates from ₹3,587 down to ₹3,447 when SMS clears
-  const safeSpendVal = interpolate(frame, [100, 140], [3587, 3447], {
+  // 2. Safe-to-Spend value animates from ₹3,587 down to ₹3,447 when SMS is tapped/cleared (14s - 17s)
+  const safeSpendVal = interpolate(frame, [420, 510], [3587, 3447], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // 3. Touch Cursor Path:
-  // Phase A: Taps SMS banner (frames 110-140)
-  // Phase B: Taps Quick Spend field (frames 170-220)
-  // Phase C: Taps Ripple button (frames 240-270)
-  // Phase D: Taps Ledger tab on floating dock (frames 360-400)
+  // 3. Touch Cursor Path paced smoothly across the 45-second scene (1,350 frames):
+  // Phase 1 (frames 0 - 320, 0s - 10.6s): Resting near Safe-to-Spend dial
+  // Phase 2 (frames 320 - 450, 10.6s - 15.0s): Glides up to Dynamic Island SMS, taps it at frame 420-450
+  // Phase 3 (frames 540 - 720, 18.0s - 24.0s): Glides down to Quick Spend input, taps it at frame 680-720
+  // Phase 4 (frames 760 - 920, 25.3s - 30.6s): Glides to "Ripple" button, taps it at frame 880-920
+  // Phase 5 (frames 960 - 1100, 32.0s - 36.6s): Hovers over expanded Goal Ripple delay card
+  // Phase 6 (frames 1120 - 1320, 37.3s - 44.0s): Glides down to bottom dock, taps Ledger at frame 1240-1280
   let cursorX = 215;
-  let cursorY = 40;
+  let cursorY = 280;
   let isTapping = false;
 
-  if (frame < 150) {
-    // Taps SMS banner near top
-    cursorX = interpolate(frame, [80, 120], [215, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [80, 120], [120, 50], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 120 && frame <= 140;
-  } else if (frame < 230) {
-    // Taps Quick Spend field
-    cursorX = interpolate(frame, [150, 190], [215, 180], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [150, 190], [50, 490], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 190 && frame <= 210;
-  } else if (frame < 320) {
-    // Taps Ripple button
-    cursorX = interpolate(frame, [230, 260], [180, 340], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [230, 260], [490, 490], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 260 && frame <= 280;
+  if (frame < 320) {
+    // Resting gently near the Safe-to-Spend dial
+    cursorX = 215;
+    cursorY = 280;
+    isTapping = false;
+  } else if (frame < 540) {
+    // Taps SMS banner at top
+    cursorX = interpolate(frame, [320, 420], [215, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [320, 420], [280, 52], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 420 && frame <= 460;
+  } else if (frame < 760) {
+    // Moves to Quick Spend field and taps
+    cursorX = interpolate(frame, [540, 680], [215, 180], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [540, 680], [52, 490], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 680 && frame <= 720;
+  } else if (frame < 960) {
+    // Moves to Ripple button and taps
+    cursorX = interpolate(frame, [760, 880], [180, 340], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [760, 880], [490, 490], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 880 && frame <= 920;
+  } else if (frame < 1120) {
+    // Hovers over the newly expanded Goal Ripple card
+    cursorX = interpolate(frame, [960, 1040], [340, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [960, 1040], [490, 560], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = false;
   } else {
     // Taps Ledger dock tab at bottom
-    cursorX = interpolate(frame, [320, 360], [340, 160], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    cursorY = interpolate(frame, [320, 360], [490, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    isTapping = frame >= 360 && frame <= 390;
+    cursorX = interpolate(frame, [1120, 1240], [215, 160], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [1120, 1240], [560, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 1240 && frame <= 1300;
   }
 
-  // Ripple card pops at frame 270
+  // Ripple card pops at frame 890 (29.6s)
   const rippleProgress = spring({
-    frame: frame - 265,
+    frame: frame - 890,
     fps,
     config: { damping: 12, stiffness: 80 },
   });
@@ -81,7 +93,7 @@ export const Scene2Overview: React.FC = () => {
         <PhoneMockup
           width={430}
           height={900}
-          activeTab={frame >= 370 ? "ledger" : "home"}
+          activeTab={frame >= 1260 ? "ledger" : "home"}
           notificationText={notifText}
           notificationSub={notifSub}
         >
