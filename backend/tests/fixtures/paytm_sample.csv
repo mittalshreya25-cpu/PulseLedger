@@ -1,0 +1,27 @@
+# SYNTHETIC TEST DATA - DO NOT USE FOR REAL FINANCIAL ANALYSIS
+date_time,description,tag,account,amount,upi_ref
+2026-06-12 11:30:00,Received from Papa Allowance,#Money Received,Canara Bank - 1234,"+ Rs.2,000.00",UPI990001
+2026-10-20 14:15:20,Paid to Zomato,#Food,Canara Bank - 1234,- Rs.120.00,UPI990002
+2026-10-21 17:40:10,Paid to Chai Point,#Food,Canara Bank - 1234,- Rs.55.00,UPI990003
+2026-10-21 08:30:00,Paid to Metro Station,#Travel,Canara Bank - 1234,- Rs.20.00,UPI990004
+2026-10-21 19:10:00,Paid to Xerox Shop,#Services,Canara Bank - 1234,- Rs.20.00,UPI990005
+2026-08-15 10:00:00,Paid to Zerodha Broking,#Financial Services,Canara Bank - 1234,"- Rs.5,000.00",UPI990006
+2026-01-10 12:00:00,Paid to Swiggy,#Food,Canara Bank - 1234,- Rs.340.00,UPI990007
+2026-01-15 09:20:00,Paid to BigBasket,#Groceries,Canara Bank - 1234,"- Rs.1,250.00",UPI990008
+2026-02-01 18:30:00,Paid to Amazon India,#Shopping,Canara Bank - 1234,- Rs.899.00,UPI990009
+2026-02-14 20:00:00,Paid to PVR Cinemas,#Entertainment,Canara Bank - 1234,- Rs.600.00,UPI990010
+2026-03-01 10:00:00,Paid to Uber India,#Travel,Canara Bank - 1234,- Rs.245.00,UPI990011
+2026-03-25 15:00:00,Paid to BookMyShow,#Entertainment,Canara Bank - 1234,- Rs.450.00,UPI990012
+2026-04-05 11:30:00,Paid to Coursera Online,#Education,Canara Bank - 1234,"- Rs.3,500.00",UPI990013
+2026-04-18 16:45:00,Paid to Urban Company,#Services,Canara Bank - 1234,- Rs.799.00,UPI990014
+2026-05-02 14:20:00,Paid to Blinkit,#Groceries,Canara Bank - 1234,- Rs.420.00,UPI990015
+2026-05-20 19:10:00,Paid to Airtel Broadband,#Bill Payments,Canara Bank - 1234,- Rs.999.00,UPI990016
+2026-06-01 12:00:00,Paid to Electricity Board,#Bill Payments,Canara Bank - 1234,"- Rs.1,450.00",UPI990017
+2026-07-12 13:00:00,Paid to Friend Rohit,#Money Transfer,Canara Bank - 1234,"- Rs.1,000.00",UPI990018
+2026-07-28 17:30:00,Paid to Myntra Fashion,#Shopping,Canara Bank - 1234,"- Rs.1,599.00",UPI990019
+2026-08-04 09:15:00,Paid to IRCTC Railway,#Travel,Canara Bank - 1234,- Rs.820.00,UPI990020
+2026-08-22 18:00:00,Paid to Stationery Mart,#Miscellaneous,Canara Bank - 1234,- Rs.180.00,UPI990021
+2026-09-05 11:45:00,Paid to College Mess,#Hostel & Mess,Canara Bank - 1234,"- Rs.4,200.00",UPI990022
+2026-09-15 16:00:00,Received from Cash Back Offer,#Miscellaneous,Paytm Wallet,+ Rs.50.00,UPI990023
+2026-10-02 10:30:00,Paid to Petrol Pump,#Transport,Canara Bank - 1234,- Rs.500.00,UPI990024
+2026-10-10 14:00:00,Paid to Pharmacy Store,#Miscellaneous,Canara Bank - 1234,- Rs.310.00,UPI990025

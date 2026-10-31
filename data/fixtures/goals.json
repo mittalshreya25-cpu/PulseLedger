@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Emergency Fund",
+    "target_paise": 30000000,
+    "target_date": "2027-12-31"
+  },
+  {
+    "name": "Health Insurance Buffer",
+    "target_paise": 10000000,
+    "target_date": "2027-06-30"
+  },
+  {
+    "name": "Annual Vacation",
+    "target_paise": 15000000,
+    "target_date": "2027-10-15"
+  }
+]
+

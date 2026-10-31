@@ -1,0 +1,29 @@
+/* PulseLedger design tokens. Light first (sunlight, cheap phones), dark is a variant. */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+:root {
+  --ink: #10262E;      /* text */
+  --paper: #EEF2F1;    /* background */
+  --mist: #D5E0DE;     /* borders, quiet fills */
+  --tide: #14766E;     /* safe, on track, primary action */
+  --saffron: #E2A000;  /* caution: fills only, never body text */
+  --persimmon: #CC4526;/* overspend, shortfall */
+  --slate: #566A70;    /* secondary text */
+  --surface: #FFFFFF;
+
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-ui: "IBM Plex Sans", system-ui, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
+  --radius: 14px;
+  --tap: 44px;
+}
+
+html { background: var(--paper); color: var(--ink); font-family: var(--font-ui); }
+body { margin: 0; max-width: 480px; margin-inline: auto; padding: var(--space-4); }
+h1, h2, .big-number { font-family: var(--font-display); }
+.money { font-variant-numeric: tabular-nums; }
+.big-number { font-size: clamp(48px, 16vw, 72px); font-weight: 700; line-height: 1; }
+button, input { min-height: var(--tap); font: inherit; }
+:focus-visible { outline: 3px solid var(--tide); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

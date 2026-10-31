@@ -1,4 +1,24 @@
-﻿.venv/
+# Python
+.venv/
+venv/
+ENV/
 __pycache__/
+*.py[cod]
+*$py.class
 *.db
+*.sqlite3
 .env
+*.local.csv
+
+# Frontend / Node
+frontend/node_modules/
+node_modules/
+frontend/dist/
+dist/
+.npm/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
