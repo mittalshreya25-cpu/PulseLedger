@@ -6,25 +6,19 @@ export const Scene1Intro: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleProgress = spring({
+  const phoneRise = spring({
     frame,
     fps,
-    config: { damping: 14, stiffness: 80 },
+    config: { damping: 15, stiffness: 70 },
   });
 
-  const subtitleProgress = spring({
-    frame: frame - 20,
+  const textFade = spring({
+    frame: frame - 15,
     fps,
     config: { damping: 14, stiffness: 80 },
   });
 
-  const deviceSlide = spring({
-    frame: frame - 45,
-    fps,
-    config: { damping: 16, stiffness: 70 },
-  });
-
-  const glowPulse = Math.sin(frame / 15) * 0.2 + 0.8;
+  const iconGlow = Math.sin(frame / 12) * 0.25 + 0.75;
 
   return (
     <div
@@ -32,165 +26,169 @@ export const Scene1Intro: React.FC = () => {
         flex: 1,
         width: "100%",
         height: "100%",
-        background: "radial-gradient(circle at 50% 30%, #0B2B26 0%, #051F20 70%, #020E0E 100%)",
+        background: "radial-gradient(circle at 50% 50%, #0D0E15 0%, #06070A 60%, #000000 100%)",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        position: "relative",
+        padding: "0 100px",
+        gap: "90px",
         fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        color: "#DAF1DE",
+        color: "#FFFFFF",
+        position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Background Ambient Glow Halo */}
+      {/* Subtle Studio Spotlight in Background */}
       <div
         style={{
           position: "absolute",
-          width: "900px",
-          height: "900px",
+          width: "800px",
+          height: "800px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(142, 182, 155, 0.12) 0%, transparent 70%)",
-          transform: `scale(${glowPulse})`,
+          background: "radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)",
+          transform: `scale(${iconGlow})`,
           pointerEvents: "none",
         }}
       />
 
-      {/* Main Title Section */}
+      {/* Center-Left: The Smartphone Running the Splash Screen */}
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-          transform: `scale(${titleProgress})`,
-          opacity: titleProgress,
+          transform: `translateY(${interpolate(phoneRise, [0, 1], [300, 0])}px)`,
+          opacity: phoneRise,
           zIndex: 10,
         }}
       >
-        {/* Brand Badge */}
+        <PhoneMockup width={420} height={880} activeTab="home">
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px",
+              textAlign: "center",
+            }}
+          >
+            {/* Pulsing Luminous App Icon */}
+            <div
+              style={{
+                width: 90,
+                height: 90,
+                borderRadius: "28px",
+                background: "linear-gradient(135deg, #10B981 0%, #047857 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "44px",
+                color: "#FFFFFF",
+                boxShadow: `0 12px 40px rgba(16, 185, 129, ${iconGlow * 0.7})`,
+                marginBottom: "24px",
+              }}
+            >
+              ⚡
+            </div>
+
+            <h2 style={{ fontSize: "36px", fontWeight: 800, margin: "0 0 8px 0", letterSpacing: "-1px" }}>
+              PulseLedger
+            </h2>
+
+            <p style={{ fontSize: "14px", color: "#94A3B8", margin: "0 0 24px 0", lineHeight: 1.5 }}>
+              Autonomous Financial Workstation
+            </p>
+
+            <div
+              style={{
+                background: "rgba(18, 19, 26, 0.8)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                padding: "8px 16px",
+                borderRadius: "20px",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "#10B981",
+              }}
+            >
+              ● Local-First Engine Active
+            </div>
+          </div>
+        </PhoneMockup>
+      </div>
+
+      {/* Center-Right: Industrial Presentation Typography */}
+      <div
+        style={{
+          maxWidth: "680px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "24px",
+          transform: `translateY(${interpolate(textFade, [0, 1], [40, 0])}px)`,
+          opacity: textFade,
+          zIndex: 10,
+        }}
+      >
         <div
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            background: "rgba(142, 182, 155, 0.15)",
-            border: "1px solid rgba(218, 241, 222, 0.3)",
-            padding: "8px 20px",
-            borderRadius: "30px",
-            fontSize: "14px",
-            letterSpacing: "1.5px",
+            background: "rgba(16, 185, 129, 0.12)",
+            border: "1px solid rgba(16, 185, 129, 0.3)",
+            padding: "6px 16px",
+            borderRadius: "20px",
+            fontSize: "13px",
+            fontWeight: 800,
+            color: "#10B981",
+            width: "fit-content",
+            letterSpacing: "1px",
             textTransform: "uppercase",
-            fontWeight: 700,
-            color: "#8EB69B",
-            marginBottom: "24px",
-            boxShadow: "0 0 20px rgba(142, 182, 155, 0.2)",
           }}
         >
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#52B788" }} />
-          Local-First Autonomous Finance • v2.4 Pro
+          📱 MOBILE-FIRST FINTECH ARCHITECTURE
         </div>
 
-        {/* Hero Title */}
         <h1
           style={{
-            fontSize: "88px",
+            fontSize: "68px",
             fontWeight: 800,
-            margin: "0 0 16px 0",
+            lineHeight: 1.05,
+            margin: 0,
             letterSpacing: "-2px",
-            background: "linear-gradient(135deg, #FFFFFF 20%, #DAF1DE 60%, #8EB69B 100%)",
+            background: "linear-gradient(135deg, #FFFFFF 30%, #E2E8F0 70%, #94A3B8 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            textShadow: "0 10px 40px rgba(0,0,0,0.6)",
           }}
         >
-          PulseLedger
+          Autonomous. Private. Designed for your Phone.
         </h1>
 
-        {/* Subtitle */}
-        <p
-          style={{
-            fontSize: "28px",
-            maxWidth: "950px",
-            lineHeight: 1.4,
-            color: "rgba(218, 241, 222, 0.8)",
-            margin: 0,
-            transform: `translateY(${interpolate(subtitleProgress, [0, 1], [30, 0])}px)`,
-            opacity: subtitleProgress,
-          }}
-        >
-          The calm, audited personal finance workstation engineered for zero-cloud privacy,
-          deterministic double-entry math, and guarded local intelligence.
+        <p style={{ fontSize: "22px", color: "#94A3B8", lineHeight: 1.5, margin: 0 }}>
+          Experience personal finance without the cloud. PulseLedger brings institutional-grade double-entry
+          accounting, stochastic forecasting, and local AI directly to your smartphone.
         </p>
 
-        {/* Feature Pills */}
-        <div
-          style={{
-            display: "flex",
-            gap: "18px",
-            marginTop: "36px",
-            transform: `translateY(${interpolate(subtitleProgress, [0, 1], [40, 0])}px)`,
-            opacity: subtitleProgress,
-          }}
-        >
+        {/* Feature Highlights Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "12px" }}>
           {[
-            "🛡️ 100% Zero-Cloud Privacy",
-            "⚡ Integer-Paise Reconciled",
-            "📈 365-Day Monte Carlo",
-            "🤖 SEBI-Guarded Local SLM",
-            "📱 Desktop & Mobile First",
-          ].map((feat, i) => (
+            { title: "🛡️ Zero-Cloud Privacy", desc: "No third-party server telemetry" },
+            { title: "⚡ Integer-Paise Precision", desc: "Zero floating-point rounding bugs" },
+            { title: "📈 365-Day Monte Carlo", desc: "1,000 runs probabilistic fan cone" },
+            { title: "🤖 SEBI-Guarded Local SLM", desc: "Compliant on-device intelligence" },
+          ].map((item, i) => (
             <div
               key={i}
               style={{
-                background: "rgba(11, 43, 38, 0.7)",
-                border: "1px solid rgba(218, 241, 222, 0.2)",
-                padding: "10px 18px",
-                borderRadius: "12px",
-                fontSize: "15px",
-                fontWeight: 600,
-                color: "#DAF1DE",
-                boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+                background: "rgba(18, 19, 26, 0.7)",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+                borderRadius: "14px",
+                padding: "14px 18px",
               }}
             >
-              {feat}
+              <div style={{ fontSize: "15px", fontWeight: 700, color: "#FFFFFF" }}>{item.title}</div>
+              <div style={{ fontSize: "12px", color: "#94A3B8", marginTop: "4px" }}>{item.desc}</div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Floating Device Showcase: Desktop and Phone */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-140px",
-          display: "flex",
-          gap: "40px",
-          alignItems: "flex-end",
-          transform: `translateY(${interpolate(deviceSlide, [0, 1], [300, 0])}px)`,
-          opacity: deviceSlide,
-          zIndex: 5,
-        }}
-      >
-        <PhoneMockup scale={0.75}>
-          <div style={{ textAlign: "center", paddingTop: "20px" }}>
-            <div style={{ fontSize: "14px", color: "#8EB69B", textTransform: "uppercase" }}>PulseLedger Mobile</div>
-            <div style={{ fontSize: "32px", fontWeight: 700, margin: "12px 0", color: "#FFFFFF" }}>₹3,447</div>
-            <div style={{ fontSize: "13px", color: "rgba(218, 241, 222, 0.7)" }}>Safe to Spend Today</div>
-            <div
-              style={{
-                marginTop: "30px",
-                background: "rgba(22, 56, 50, 0.7)",
-                borderRadius: "16px",
-                padding: "16px",
-                textAlign: "left",
-              }}
-            >
-              <div style={{ fontSize: "12px", color: "#8EB69B" }}>Live SMS Stream</div>
-              <div style={{ fontSize: "14px", fontWeight: 600, marginTop: "4px" }}>₹140 Swiggy debit parsed</div>
-            </div>
-          </div>
-        </PhoneMockup>
       </div>
     </div>
   );

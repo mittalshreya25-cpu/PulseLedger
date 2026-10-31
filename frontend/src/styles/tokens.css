@@ -10,20 +10,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
 
 :root {
-  /* DARK THEME (DEFAULT) - Curated Luxury Emerald Noir */
-  --ink: #DAF1DE;             /* Mint cream porcelain text */
-  --paper: #051F20;           /* Deepest forest noir canvas */
-  --surface: #0B2B26;         /* Deep cypress glass card surface */
-  --surface-raised: #163832;  /* Spruce surface for inputs, chips, subcards */
-  --mist: rgba(218, 241, 222, 0.12); /* Subtle porcelain border */
-  --tide: #8EB69B;            /* Celadon sage primary accent */
-  --tide-glow: rgba(142, 182, 155, 0.25);
-  --accent-cta: #DAF1DE;      /* Crisp porcelain button text / highlight */
-  --mint: #8EB69B;
-  --saffron: #E9A159;         /* FlowFunds warm sunset amber */
-  --persimmon: #E56B6F;       /* Soft coral terracotta for debits */
-  --slate: #8EB69B;           /* Secondary muted celadon */
-  --slate-dim: rgba(218, 241, 222, 0.65);
+  /* DARK THEME (DEFAULT) - Ultra-Sleek Obsidian Black (Industrial-Grade Fintech) */
+  --ink: #FFFFFF;             /* Crisp pure white text */
+  --paper: #090A0F;           /* Deep obsidian pitch black canvas */
+  --surface: #12131A;         /* Charcoal glass card surface */
+  --surface-raised: #1C1E29;  /* Raised slate for inputs, chips, subcards */
+  --mist: rgba(255, 255, 255, 0.09); /* Crisp glass border */
+  --tide: #10B981;            /* Vibrant electric emerald/mint accent */
+  --tide-glow: rgba(16, 185, 129, 0.25);
+  --accent-cta: #10B981;      /* Crisp emerald button text / highlight */
+  --mint: #34D399;
+  --saffron: #F59E0B;         /* Amber warning */
+  --persimmon: #EF4444;       /* Clean coral red for debits */
+  --slate: #94A3B8;           /* Clean cool slate */
+  --slate-dim: #64748B;       /* Secondary cool gray */
 
   --font-display: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-ui: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -39,46 +39,46 @@
   --radius-lg: 24px;
   --tap: 44px;
 
-  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.50);
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.65);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --ink: #DAF1DE;
-    --paper: #051F20;
-    --surface: #0B2B26;
-    --surface-raised: #163832;
-    --mist: rgba(218, 241, 222, 0.12);
-    --tide: #8EB69B;
-    --tide-glow: rgba(142, 182, 155, 0.25);
-    --accent-cta: #DAF1DE;
-    --mint: #8EB69B;
-    --saffron: #E9A159;
-    --persimmon: #E56B6F;
-    --slate: #8EB69B;
-    --slate-dim: rgba(218, 241, 222, 0.65);
-    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
-    --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.50);
+    --ink: #FFFFFF;
+    --paper: #090A0F;
+    --surface: #12131A;
+    --surface-raised: #1C1E29;
+    --mist: rgba(255, 255, 255, 0.09);
+    --tide: #10B981;
+    --tide-glow: rgba(16, 185, 129, 0.25);
+    --accent-cta: #10B981;
+    --mint: #34D399;
+    --saffron: #F59E0B;
+    --persimmon: #EF4444;
+    --slate: #94A3B8;
+    --slate-dim: #64748B;
+    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.45);
+    --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.65);
   }
 }
 
 [data-theme="dark"] {
-  --ink: #DAF1DE;
-  --paper: #051F20;
-  --surface: #0B2B26;
-  --surface-raised: #163832;
-  --mist: rgba(218, 241, 222, 0.12);
-  --tide: #8EB69B;
-  --tide-glow: rgba(142, 182, 155, 0.25);
-  --accent-cta: #DAF1DE;
-  --mint: #8EB69B;
-  --saffron: #E9A159;
-  --persimmon: #E56B6F;
-  --slate: #8EB69B;
-  --slate-dim: rgba(218, 241, 222, 0.65);
-  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.50);
+  --ink: #FFFFFF;
+  --paper: #090A0F;
+  --surface: #12131A;
+  --surface-raised: #1C1E29;
+  --mist: rgba(255, 255, 255, 0.09);
+  --tide: #10B981;
+  --tide-glow: rgba(16, 185, 129, 0.25);
+  --accent-cta: #10B981;
+  --mint: #34D399;
+  --saffron: #F59E0B;
+  --persimmon: #EF4444;
+  --slate: #94A3B8;
+  --slate-dim: #64748B;
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 10px 32px rgba(0, 0, 0, 0.65);
 }
 
 [data-theme="light"] {

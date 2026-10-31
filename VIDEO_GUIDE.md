@@ -49,3 +49,4 @@ The complete, word-for-word voiceover script with on-screen visual directions is
 - `scenes/Scene6Outro.tsx`: Smartphone mockup with mobile layout, floating dock, and GitHub links.
 - `components/PhoneMockup.tsx`: iPhone device frame with dynamic island and home bar.
 - `components/DesktopFrame.tsx`: Studio desktop browser frame with window controls.
+

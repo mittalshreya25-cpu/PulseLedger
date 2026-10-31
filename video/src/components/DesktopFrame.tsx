@@ -80,3 +80,4 @@ export const DesktopFrame: React.FC<DesktopFrameProps> = ({
     </div>
   );
 };
+

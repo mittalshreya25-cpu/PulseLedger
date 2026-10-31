@@ -42,3 +42,4 @@ export const Walkthrough: React.FC = () => {
     </div>
   );
 };
+
