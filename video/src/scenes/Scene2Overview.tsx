@@ -10,20 +10,51 @@ export const Scene2Overview: React.FC = () => {
   // Entrance
   const enter = spring({ frame, fps, config: { damping: 15, stiffness: 80 } });
 
-  // Notification drops at frame 60
-  const showNotification = frame >= 60 && frame <= 220;
+  // 1. Dynamic Island SMS Notification drops at frame 50, dismisses at frame 150
+  const showNotification = frame >= 50 && frame <= 160;
   const notifText = showNotification ? "Bank SMS: ₹140 Swiggy" : null;
   const notifSub = showNotification ? "Canara Bank • Parsed into Food category" : null;
 
-  // Touch cursor movements:
-  // Moves to Quick Spend button at frame 150, taps at frame 180
-  const cursorX = interpolate(frame, [120, 160], [250, 210], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const cursorY = interpolate(frame, [120, 160], [600, 480], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const isTapping = frame >= 170 && frame <= 190;
+  // 2. Safe-to-Spend value animates from ₹3,587 down to ₹3,447 when SMS clears
+  const safeSpendVal = interpolate(frame, [100, 140], [3587, 3447], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
-  // Goal ripple card pop at frame 190
+  // 3. Touch Cursor Path:
+  // Phase A: Taps SMS banner (frames 110-140)
+  // Phase B: Taps Quick Spend field (frames 170-220)
+  // Phase C: Taps Ripple button (frames 240-270)
+  // Phase D: Taps Ledger tab on floating dock (frames 360-400)
+  let cursorX = 215;
+  let cursorY = 40;
+  let isTapping = false;
+
+  if (frame < 150) {
+    // Taps SMS banner near top
+    cursorX = interpolate(frame, [80, 120], [215, 215], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [80, 120], [120, 50], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 120 && frame <= 140;
+  } else if (frame < 230) {
+    // Taps Quick Spend field
+    cursorX = interpolate(frame, [150, 190], [215, 180], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [150, 190], [50, 490], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 190 && frame <= 210;
+  } else if (frame < 320) {
+    // Taps Ripple button
+    cursorX = interpolate(frame, [230, 260], [180, 340], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [230, 260], [490, 490], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 260 && frame <= 280;
+  } else {
+    // Taps Ledger dock tab at bottom
+    cursorX = interpolate(frame, [320, 360], [340, 160], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    cursorY = interpolate(frame, [320, 360], [490, 840], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    isTapping = frame >= 360 && frame <= 390;
+  }
+
+  // Ripple card pops at frame 270
   const rippleProgress = spring({
-    frame: frame - 185,
+    frame: frame - 265,
     fps,
     config: { damping: 12, stiffness: 80 },
   });
@@ -34,11 +65,11 @@ export const Scene2Overview: React.FC = () => {
         flex: 1,
         width: "100%",
         height: "100%",
-        background: "radial-gradient(circle at 40% 50%, #0B0C12 0%, #040507 60%, #000000 100%)",
+        background: "#08090E",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "0 80px",
+        padding: "0 90px",
         gap: "80px",
         fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         color: "#FFFFFF",
@@ -46,11 +77,11 @@ export const Scene2Overview: React.FC = () => {
       }}
     >
       {/* Left: Interactive Phone Screen Operating Overview */}
-      <div style={{ transform: `scale(${enter})`, opacity: enter, position: "relative" }}>
+      <div style={{ transform: `scale(${enter})`, position: "relative" }}>
         <PhoneMockup
           width={430}
           height={900}
-          activeTab="home"
+          activeTab={frame >= 370 ? "ledger" : "home"}
           notificationText={notifText}
           notificationSub={notifSub}
         >
@@ -59,16 +90,16 @@ export const Scene2Overview: React.FC = () => {
             {/* Top User Bar */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#1E1F2A", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "#10B981" }}>
+                <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#1E202E", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: "#10B981", border: "1px solid #10B981" }}>
                   A
                 </div>
                 <div>
-                  <div style={{ fontSize: "14px", fontWeight: 700 }}>Aarav</div>
-                  <div style={{ fontSize: "11px", color: "#94A3B8" }}>Student / Intern</div>
+                  <div style={{ fontSize: "14px", fontWeight: 800, color: "#FFFFFF" }}>Aarav</div>
+                  <div style={{ fontSize: "11px", color: "#CBD5E1" }}>Student / Intern</div>
                 </div>
               </div>
 
-              <div style={{ background: "rgba(16, 185, 129, 0.15)", border: "1px solid rgba(16, 185, 129, 0.3)", padding: "4px 10px", borderRadius: "12px", fontSize: "11px", color: "#10B981", fontWeight: 700 }}>
+              <div style={{ background: "#10B981", color: "#000000", padding: "4px 12px", borderRadius: "14px", fontSize: "11px", fontWeight: 900 }}>
                 Allowance Regime
               </div>
             </div>
@@ -76,23 +107,23 @@ export const Scene2Overview: React.FC = () => {
             {/* Central Safe-to-Spend Dial Card */}
             <div
               style={{
-                background: "rgba(18, 19, 26, 0.9)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
+                background: "#12141F",
+                border: "1px solid rgba(255, 255, 255, 0.12)",
                 borderRadius: "22px",
                 padding: "20px",
                 textAlign: "center",
-                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.6)",
               }}
             >
-              <div style={{ fontSize: "11px", color: "#94A3B8", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700 }}>
+              <div style={{ fontSize: "11px", color: "#94A3B8", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800 }}>
                 Autonomous Safe-to-Spend Today
               </div>
 
               <div style={{ fontSize: "52px", fontWeight: 900, color: "#FFFFFF", margin: "10px 0 4px 0", letterSpacing: "-1px" }}>
-                ₹3,447
+                ₹{Math.round(safeSpendVal).toLocaleString("en-IN")}
               </div>
 
-              <div style={{ fontSize: "12px", color: "#10B981", fontWeight: 600 }}>
+              <div style={{ fontSize: "12px", color: "#10B981", fontWeight: 700 }}>
                 ● Velocity Healthy (₹1,553 spent / ₹5,000 allowance)
               </div>
 
@@ -105,13 +136,13 @@ export const Scene2Overview: React.FC = () => {
             {/* Quick Spend Simulation Input */}
             <div
               style={{
-                background: "rgba(18, 19, 26, 0.9)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
+                background: "#12141F",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
                 borderRadius: "18px",
                 padding: "16px",
               }}
             >
-              <div style={{ fontSize: "11px", color: "#94A3B8", fontWeight: 700, textTransform: "uppercase", marginBottom: "8px" }}>
+              <div style={{ fontSize: "11px", color: "#CBD5E1", fontWeight: 800, textTransform: "uppercase", marginBottom: "8px" }}>
                 Simulate Discretionary Spend
               </div>
 
@@ -120,24 +151,26 @@ export const Scene2Overview: React.FC = () => {
                   style={{
                     flex: 1,
                     background: "#090A0F",
-                    border: "1px solid rgba(255, 255, 255, 0.12)",
+                    border: "1px solid rgba(255, 255, 255, 0.18)",
                     borderRadius: "10px",
                     padding: "10px 12px",
                     fontSize: "13px",
                     color: "#FFFFFF",
+                    fontWeight: 600,
                   }}
                 >
-                  ₹1,200 (Dinner with Friends)
+                  {frame >= 180 ? "₹1,200 (Dinner with Friends)" : "Enter amount to test..."}
                 </div>
                 <button
                   style={{
-                    background: "#10B981",
+                    background: isTapping && frame >= 260 && frame <= 280 ? "#34D399" : "#10B981",
                     color: "#000000",
                     border: "none",
                     borderRadius: "10px",
                     padding: "0 14px",
-                    fontWeight: 800,
+                    fontWeight: 900,
                     fontSize: "12px",
+                    transform: isTapping && frame >= 260 && frame <= 280 ? "scale(0.95)" : "scale(1)",
                   }}
                 >
                   Ripple
@@ -149,7 +182,7 @@ export const Scene2Overview: React.FC = () => {
                 <div
                   style={{
                     marginTop: "12px",
-                    background: "rgba(245, 158, 11, 0.12)",
+                    background: "rgba(245, 158, 11, 0.15)",
                     border: "1px solid #F59E0B",
                     borderRadius: "12px",
                     padding: "12px",
@@ -157,21 +190,21 @@ export const Scene2Overview: React.FC = () => {
                     opacity: rippleProgress,
                   }}
                 >
-                  <div style={{ color: "#F59E0B", fontSize: "11px", fontWeight: 800, textTransform: "uppercase" }}>
-                    ⚠️ Goal Ripple Delay
+                  <div style={{ color: "#F59E0B", fontSize: "11px", fontWeight: 900, textTransform: "uppercase" }}>
+                    ⚠️ Goal Ripple Delay Forecast
                   </div>
-                  <div style={{ fontSize: "12px", color: "#FFFFFF", marginTop: "4px", lineHeight: 1.4 }}>
-                    This ₹1,200 spend delays your <strong>Laptop Fund</strong> by <strong>2 days</strong>.
+                  <div style={{ fontSize: "12px", color: "#FFFFFF", marginTop: "4px", lineHeight: 1.4, fontWeight: 500 }}>
+                    This ₹1,200 spend shifts your <strong>Laptop Fund goal</strong> by approximately <strong>2 days</strong>.
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Recent Reconciled List */}
+            {/* Recent Reconciled Activity */}
             <div
               style={{
-                background: "rgba(18, 19, 26, 0.9)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
+                background: "#12141F",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
                 borderRadius: "18px",
                 padding: "14px 16px",
                 display: "flex",
@@ -179,17 +212,17 @@ export const Scene2Overview: React.FC = () => {
                 gap: "8px",
               }}
             >
-              <div style={{ fontSize: "11px", color: "#94A3B8", fontWeight: 700, textTransform: "uppercase" }}>
+              <div style={{ fontSize: "11px", color: "#CBD5E1", fontWeight: 800, textTransform: "uppercase" }}>
                 Recent Reconciled Activity
               </div>
 
               {[
-                { payee: "Swiggy", tag: "Food", amt: "-₹140.00", color: "#EF4444" },
-                { payee: "Allowance", tag: "UPI", amt: "+₹5,000.00", color: "#10B981" },
+                { payee: "Swiggy", tag: "Food (Parsed SMS)", amt: "-₹140.00", color: "#EF4444" },
+                { payee: "Allowance", tag: "UPI Reconciled", amt: "+₹5,000.00", color: "#10B981" },
               ].map((tx, i) => (
                 <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "13px" }}>
                   <div>
-                    <div style={{ fontWeight: 600 }}>{tx.payee}</div>
+                    <div style={{ fontWeight: 700, color: "#FFFFFF" }}>{tx.payee}</div>
                     <div style={{ fontSize: "10px", color: "#94A3B8" }}>{tx.tag}</div>
                   </div>
                   <div style={{ fontWeight: 800, color: tx.color }}>{tx.amt}</div>
@@ -198,38 +231,51 @@ export const Scene2Overview: React.FC = () => {
             </div>
           </div>
 
-          {/* Animated Touch Cursor */}
-          <TouchCursor x={cursorX} y={cursorY} isTapping={isTapping} visible={frame >= 110} />
+          {/* Animated Touch Cursor Operating Screen */}
+          <TouchCursor x={cursorX} y={cursorY} isTapping={isTapping} visible={true} />
         </PhoneMockup>
       </div>
 
-      {/* Right: Industrial Architecture Callouts */}
-      <div style={{ maxWidth: "620px", display: "flex", flexDirection: "column", gap: "24px" }}>
-        <div style={{ background: "rgba(16, 185, 129, 0.15)", border: "1px solid #10B981", padding: "4px 14px", borderRadius: "12px", fontSize: "13px", color: "#10B981", fontWeight: 800, width: "fit-content" }}>
+      {/* Right: High-Contrast Presentation Callouts */}
+      <div style={{ maxWidth: "660px", display: "flex", flexDirection: "column", gap: "24px", zIndex: 10 }}>
+        <div
+          style={{
+            background: "#10B981",
+            color: "#000000",
+            padding: "8px 18px",
+            borderRadius: "20px",
+            fontSize: "14px",
+            fontWeight: 900,
+            width: "fit-content",
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+            boxShadow: "0 4px 20px rgba(16, 185, 129, 0.4)",
+          }}
+        >
           SECTION 01 • OVERVIEW & INGESTION
         </div>
 
-        <h2 style={{ fontSize: "48px", fontWeight: 800, margin: 0, letterSpacing: "-1px" }}>
+        <h2 style={{ fontSize: "52px", fontWeight: 900, margin: 0, letterSpacing: "-1.5px", color: "#FFFFFF", lineHeight: 1.1 }}>
           Living Financial Pulse & Zero-Touch SMS Sync
         </h2>
 
-        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, margin: 0 }}>
+        <p style={{ fontSize: "20px", color: "#F1F5F9", lineHeight: 1.5, margin: 0, fontWeight: 500 }}>
           Instead of outdated monthly budgets that fail on daily realities, PulseLedger continuously computes your
-          <strong> Safe-to-Spend limit</strong> based on upcoming bills and liquid cash.
+          <strong style={{ color: "#10B981" }}> Safe-to-Spend limit</strong> based on upcoming bills, recurring commitments, and cash velocity.
         </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-          <div style={{ background: "rgba(18, 19, 26, 0.8)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "14px", padding: "16px 20px" }}>
-            <div style={{ fontWeight: 700, fontSize: "16px", color: "#10B981" }}>⚡ Instant SMS Ingestion</div>
-            <div style={{ fontSize: "13px", color: "#94A3B8", marginTop: "4px" }}>
-              Bank SMS parsed locally via regex and fuzzy matching in milliseconds — zero cloud storage.
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div style={{ background: "#161824", border: "1px solid rgba(255, 255, 255, 0.2)", borderRadius: "16px", padding: "18px 22px", boxShadow: "0 8px 24px rgba(0,0,0,0.6)" }}>
+            <div style={{ fontWeight: 800, fontSize: "17px", color: "#10B981" }}>⚡ Autonomous SMS Ingestion</div>
+            <div style={{ fontSize: "14px", color: "#CBD5E1", marginTop: "6px", lineHeight: 1.4, fontWeight: 500 }}>
+              Bank SMS parsed locally via regex and fuzzy matching in milliseconds — zero cloud storage, zero telemetry.
             </div>
           </div>
 
-          <div style={{ background: "rgba(18, 19, 26, 0.8)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "14px", padding: "16px 20px" }}>
-            <div style={{ fontWeight: 700, fontSize: "16px", color: "#F59E0B" }}>⚠️ Goal Ripple Engine</div>
-            <div style={{ fontSize: "13px", color: "#94A3B8", marginTop: "4px" }}>
-              Quantifies exact opportunity cost: simulates how many days any discretionary purchase delays your life goals.
+          <div style={{ background: "#161824", border: "1px solid rgba(255, 255, 255, 0.2)", borderRadius: "16px", padding: "18px 22px", boxShadow: "0 8px 24px rgba(0,0,0,0.6)" }}>
+            <div style={{ fontWeight: 800, fontSize: "17px", color: "#F59E0B" }}>⚠️ Goal Ripple Engine</div>
+            <div style={{ fontSize: "14px", color: "#CBD5E1", marginTop: "6px", lineHeight: 1.4, fontWeight: 500 }}>
+              Quantifies exact opportunity cost: simulates how many days any discretionary purchase delays your primary life goals.
             </div>
           </div>
         </div>

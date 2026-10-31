@@ -64,3 +64,4 @@ export const TouchCursor: React.FC<TouchCursorProps> = ({
     </div>
   );
 };
+
