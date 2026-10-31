@@ -1,3 +1,4 @@
+import calendar
 from datetime import date, timedelta
 import sqlite3
 from typing import Any, Dict, List, Optional, Tuple
@@ -96,39 +97,49 @@ def run_monte_carlo_simulation(
     daily_spend_matrix = historical_daily_spend[draw_indices].astype(np.float64) * discretionary_multiplier
 
     # 2. Add fixed costs and income onto daily cash flow vectors of shape (horizon_days,)
-    today = date.today()
     fixed_flow = np.zeros(horizon_days, dtype=np.int64)
 
-    # Fixed costs
+    # Recurring monthly fixed costs scheduled on their monthly due day
     for fc in fixed_costs:
         due_day = int(fc.get("due_day", 1))
         amt = int(fc.get("amount_paise", 0))
-        for d in range(horizon_days):
-            curr_date = today + timedelta(days=d)
-            if curr_date.day == due_day:
-                fixed_flow[d] -= amt
+        for i in range(1, 14):
+            mo = (today.month + i - 1) % 12 + 1
+            yr = today.year + (today.month + i - 1) // 12
+            max_d = calendar.monthrange(yr, mo)[1]
+            event_d = date(yr, mo, min(due_day, max_d))
+            diff = (event_d - today).days
+            if 0 < diff <= horizon_days:
+                fixed_flow[diff - 1] -= amt
 
     if fixed_cost_delta_paise != 0:
-        for d in range(horizon_days):
-            curr_date = today + timedelta(days=d)
-            if curr_date.day == 1:
-                fixed_flow[d] -= fixed_cost_delta_paise
+        for i in range(1, 14):
+            mo = (today.month + i - 1) % 12 + 1
+            yr = today.year + (today.month + i - 1) // 12
+            max_d = calendar.monthrange(yr, mo)[1]
+            event_d = date(yr, mo, min(1, max_d))
+            diff = (event_d - today).days
+            if 0 < diff <= horizon_days:
+                fixed_flow[diff - 1] -= fixed_cost_delta_paise
 
-    # Income streams
+    # Recurring monthly income streams scheduled on monthly pay day
     for inc in income_streams:
         amt = int(inc.get("amount_paise", 0)) + income_delta_paise
         nd_str = inc.get("next_date")
         ed_str = inc.get("end_date")
         end_d = date.fromisoformat(ed_str[:10]) if ed_str else None
-        
-        # Monthly income on same day of month
-        start_day = date.fromisoformat(nd_str[:10]).day if nd_str else 1
-        for d in range(horizon_days):
-            curr_date = today + timedelta(days=d)
-            if end_d and curr_date > end_d:
+        target_day = date.fromisoformat(nd_str[:10]).day if nd_str else 1
+
+        for i in range(1, 14):
+            mo = (today.month + i - 1) % 12 + 1
+            yr = today.year + (today.month + i - 1) // 12
+            max_d = calendar.monthrange(yr, mo)[1]
+            event_d = date(yr, mo, min(target_day, max_d))
+            if end_d and event_d > end_d:
                 continue
-            if curr_date.day == start_day:
-                fixed_flow[d] += amt
+            diff = (event_d - today).days
+            if 0 < diff <= horizon_days:
+                fixed_flow[diff - 1] += amt
 
     # One-time expense
     if one_time_expense_paise > 0 and 0 <= one_time_expense_day < horizon_days:
@@ -137,17 +148,34 @@ def run_monte_carlo_simulation(
     # Net daily change for each run: fixed_flow[d] - daily_spend_matrix[:, d]
     net_daily = fixed_flow[np.newaxis, :] - daily_spend_matrix
 
-    # Cumulative cash flow trajectories
-    balance_trajectories = starting_balance + np.cumsum(net_daily, axis=1)
+    # Cumulative cash flow trajectories anchored at starting_balance on Day 0
+    balance_trajectories = np.zeros((num_runs, horizon_days + 1))
+    balance_trajectories[:, 0] = starting_balance
+    balance_trajectories[:, 1:] = starting_balance + np.cumsum(net_daily, axis=1)
 
     # 3. Goal tracking: check when cumulative surplus achieves each goal target
-    goal_results = []
     primary_goal_target = int(goals[0]["target_paise"]) if goals else 6000000
     primary_goal_saved = int(goals[0]["saved_paise"]) if goals else 0
     remaining_goal = max(0, primary_goal_target - primary_goal_saved)
 
-    # Percentiles over time (at 12 monthly checkpoints)
-    checkpoints = [min(horizon_days - 1, int(i * (horizon_days / 12))) for i in range(13)]
+    # Sample percentiles at clean calendar intervals
+    if horizon_days == 365:
+        checkpoints = [0]
+        for m in range(1, 13):
+            yr = today.year + (today.month + m - 1) // 12
+            mo = (today.month + m - 1) % 12 + 1
+            max_d = calendar.monthrange(yr, mo)[1]
+            target_d = min(today.day, max_d)
+            m_date = date(yr, mo, target_d)
+            diff = (m_date - today).days
+            if diff <= horizon_days:
+                checkpoints.append(diff)
+        if checkpoints[-1] < horizon_days:
+            checkpoints.append(horizon_days)
+    else:
+        num_intervals = min(12, max(2, horizon_days // 7))
+        checkpoints = [min(horizon_days, int(i * (horizon_days / num_intervals))) for i in range(num_intervals + 1)]
+
     percentiles_over_time = []
     for cp in checkpoints:
         balances_at_cp = balance_trajectories[:, cp]
@@ -162,10 +190,9 @@ def run_monte_carlo_simulation(
         })
 
     # P50 goal completion calculation
-    # When does median balance exceed (remaining_goal + buffer_paise)?
     median_trajectory = np.percentile(balance_trajectories, 50, axis=0)
     goal_achievement_day = None
-    for d in range(horizon_days):
+    for d in range(horizon_days + 1):
         if median_trajectory[d] >= (starting_balance + remaining_goal):
             goal_achievement_day = d
             break

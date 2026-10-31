@@ -873,30 +873,58 @@ export default function App() {
 
           {planSubTab === "trajectory" ? (
             <section className="card zen-card" aria-label="Monte Carlo What-If Simulation">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h3 className="zen-card-title">Monte Carlo Cash-Flow Trajectory (365 Days)</h3>
-                {simLoading && <span style={{ fontSize: "0.8rem", color: "var(--slate)" }}>Running 1,000 runs...</span>}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+                <div>
+                  <h3 className="zen-card-title" style={{ margin: 0 }}>Monte Carlo Cash-Flow Trajectory (365 Days)</h3>
+                  <p style={{ margin: "4px 0 0 0", fontSize: "0.82rem", color: "var(--slate)" }}>
+                    1,000 stochastic runs modeling cumulative cash flow, recurring obligations, and daily variance.
+                  </p>
+                </div>
+                {simLoading && <span style={{ fontSize: "0.8rem", color: "var(--tide)" }}>Simulating 1,000 runs...</span>}
               </div>
+
+              {simResult && (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px", marginTop: "12px", marginBottom: "8px" }}>
+                  <div className="result-stat-box" style={{ padding: "8px 12px" }}>
+                    <div className="result-stat-label">Starting Balance (Day 0)</div>
+                    <div className="result-stat-value" style={{ fontSize: "1.1rem", color: "var(--ink)" }}>
+                      {formatINR(simResult.starting_balance_paise)}
+                    </div>
+                  </div>
+                  <div className="result-stat-box" style={{ padding: "8px 12px" }}>
+                    <div className="result-stat-label">Expected 1-Yr Net (P50)</div>
+                    <div className="result-stat-value" style={{ fontSize: "1.1rem", color: "var(--tide)" }}>
+                      {formatINR(simResult.median_ending_balance_paise)}
+                    </div>
+                  </div>
+                  <div className="result-stat-box" style={{ padding: "8px 12px" }}>
+                    <div className="result-stat-label">Conservative Floor (P10)</div>
+                    <div className="result-stat-value" style={{ fontSize: "1.1rem", color: "#8EB69B" }}>
+                      {formatINR(simResult.percentiles_over_time[simResult.percentiles_over_time.length - 1]?.p10 || 0)}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {simResult && (
                 <FanChart
                   data={simResult.percentiles_over_time}
                   bufferPaise={safeData?.buffer_paise || 20000}
-                  height={260}
+                  height={280}
                 />
               )}
 
               {simResult && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-2)", marginTop: "4px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-2)", marginTop: "10px" }}>
                   <div className="result-stat-box">
-                    <div className="result-stat-label">Shortfall Risk</div>
+                    <div className="result-stat-label">Shortfall Risk (Below ₹0)</div>
                     <div className="result-stat-value" style={{ color: simResult.shortfall_probability > 0.1 ? "var(--persimmon)" : "var(--tide)" }}>
                       {(simResult.shortfall_probability * 100).toFixed(1)}%
                     </div>
                   </div>
 
                   <div className="result-stat-box">
-                    <div className="result-stat-label">Buffer Breach Risk</div>
+                    <div className="result-stat-label">Buffer Breach Risk (Below Reserve)</div>
                     <div className="result-stat-value" style={{ color: simResult.buffer_breach_probability > 0.2 ? "var(--saffron)" : "var(--tide)" }}>
                       {(simResult.buffer_breach_probability * 100).toFixed(1)}%
                     </div>
@@ -905,10 +933,15 @@ export default function App() {
               )}
 
               {/* What-If Sliders */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginTop: "12px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginTop: "16px" }}>
                 <div className="slider-group">
-                  <div className="slider-header">
+                  <div className="slider-header" style={{ display: "flex", justifyContent: "space-between" }}>
                     <span>What-if: Cut Dining Out: {diningCutPct}%</span>
+                    {diningCutPct > 0 && (
+                      <span style={{ fontSize: "0.8rem", color: "var(--tide)", fontWeight: 600 }}>
+                        +Saves ~₹{Math.round(diningCutPct * 120).toLocaleString("en-IN")}/mo
+                      </span>
+                    )}
                   </div>
                   <input
                     type="range"
@@ -926,8 +959,13 @@ export default function App() {
                 </div>
 
                 <div className="slider-group">
-                  <div className="slider-header">
-                    <span>What-if: Rent Change: {rentDeltaRupees >= 0 ? `+₹${rentDeltaRupees}` : `-₹${Math.abs(rentDeltaRupees)}`}</span>
+                  <div className="slider-header" style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span>What-if: Monthly Rent Change: {rentDeltaRupees >= 0 ? `+₹${rentDeltaRupees.toLocaleString("en-IN")}` : `-₹${Math.abs(rentDeltaRupees).toLocaleString("en-IN")}`}</span>
+                    {rentDeltaRupees !== 0 && (
+                      <span style={{ fontSize: "0.8rem", color: rentDeltaRupees < 0 ? "var(--tide)" : "var(--persimmon)", fontWeight: 600 }}>
+                        {rentDeltaRupees < 0 ? "+" : "-"}₹{Math.abs(rentDeltaRupees * 12).toLocaleString("en-IN")}/yr impact
+                      </span>
+                    )}
                   </div>
                   <input
                     type="range"
