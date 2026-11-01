@@ -62,3 +62,4 @@ echo  Press Ctrl+C in this window to stop all services.
 echo ====================================================================
 
 pause
+

@@ -44,18 +44,39 @@ chmod +x launch-pulseledger.sh
 
 ---
 
-### Method 3: Native Android APK Build (Capacitor)
-For developers wanting to compile a native `.apk` package:
-```bash
-# 1. Build mobile frontend bundle
-npm run build:mobile
+### Method 3: Native Android APK Build & Download
+The repository includes a complete native Android application in `frontend/android/` with package ID `com.pulseledger.app`:
+- **Direct APK Download**: Built APKs are compiled automatically on every push via GitHub Actions. Download the latest debug APK from the [GitHub Actions Artifacts](https://github.com/mittalshreya25-cpu/PulseLedger/actions).
+- **Local Gradle Compilation**:
+  ```bash
+  cd frontend/android
+  ./gradlew assembleDebug
+  # APK generated at: frontend/android/app/build/outputs/apk/debug/app-debug.apk
+  ```
 
-# 2. Sync native Android project
-npx @capacitor/cli sync android
+---
 
-# 3. Open in Android Studio to build APK
-npx @capacitor/cli open android
-```
+## 🔒 Custom Account Onboarding & Zero-Cloud Privacy Vault
+
+PulseLedger features a **100% on-device private personal account system** that lets anyone move beyond demo personas and configure their living budget model:
+
+1. **Identity & Professional Designation**:
+   - Customizable profile name.
+   - Professional designation roles: **Student / Intern**, **Salaried Professional**, **Freelancer / Consultant**, or **Business Owner / Founder**.
+   - Living Tier selection: Bengaluru, Mumbai, Delhi-NCR, Hyderabad/Pune, or Tier-2/Tier-3.
+2. **Living Money Model Parameters**:
+   - Monthly net in-hand income & primary payday of the month.
+   - Core fixed commitments (rent, EMIs, utilities, groceries).
+   - Discretionary flexible allowance.
+   - Emergency buffer cushion reserve.
+   - Primary life goal (name, target amount in ₹, and target milestone date).
+3. **Explicit Permissions & Security Consent**:
+   - **Local Encrypted Storage Consent**: All data is stored strictly in device sandboxed storage.
+   - **On-Device SMS Parsing Consent**: Ingests transaction SMS locally without network calls.
+   - **Velocity Drift Nudges**: Real-time pacing nudges when discretionary spend exceeds daily runway.
+   - **Device PIN Lock Protection**: Optional 4 to 6 digit security PIN to prevent unauthorized viewing on shared devices.
+4. **Zero-Cloud Architecture Guarantee**:
+   - PulseLedger **never** transmits user financial amounts, account numbers, or bank SMS to third-party clouds or remote telemetry services. All ledger math and Monte Carlo simulations execute exclusively on the user's device.
 
 ---
 
@@ -97,3 +118,4 @@ All 76 backend unit and integration tests pass with 100% green coverage.
 
 ## 📄 License
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+

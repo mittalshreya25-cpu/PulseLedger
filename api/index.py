@@ -24,3 +24,4 @@ try:
 except Exception as e:
     # Graceful pass if fixtures cannot be read or already initialized
     pass
+

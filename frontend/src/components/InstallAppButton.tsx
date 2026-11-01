@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { DownloadAppModal } from "./DownloadAppModal";
 
 export const InstallAppButton: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isStandalone, setIsStandalone] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
-  const [showIOSModal, setShowIOSModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Check if already running in standalone PWA mode
@@ -31,18 +32,15 @@ export const InstallAppButton: React.FC = () => {
     };
   }, []);
 
-  const handleInstallClick = async () => {
+  const handlePwaInstall = async () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const choiceResult = await deferredPrompt.userChoice;
       if (choiceResult.outcome === "accepted") {
         setDeferredPrompt(null);
       }
-    } else if (isIOS) {
-      setShowIOSModal(true);
     } else {
-      // General guidance for browsers without beforeinstallprompt
-      alert("To install PulseLedger on your device: open browser settings (⋮ or ⋯) and tap 'Install App' or 'Add to Home screen'.");
+      setShowModal(true);
     }
   };
 
@@ -72,8 +70,8 @@ export const InstallAppButton: React.FC = () => {
     <>
       <button
         type="button"
-        onClick={handleInstallClick}
-        title="Install PulseLedger on your phone or desktop as a native app"
+        onClick={() => setShowModal(true)}
+        title="Download or install PulseLedger on your phone as a mobile app"
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -99,102 +97,16 @@ export const InstallAppButton: React.FC = () => {
         }}
       >
         <span>📲</span>
-        <span>Install App</span>
+        <span>Download App</span>
       </button>
 
-      {/* iOS Safari Installation Instruction Modal */}
-      {showIOSModal && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "rgba(0, 0, 0, 0.75)",
-            backdropFilter: "blur(6px)",
-            zIndex: 9999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "20px",
-          }}
-          onClick={() => setShowIOSModal(false)}
-        >
-          <div
-            style={{
-              background: "#161824",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              borderRadius: "20px",
-              padding: "24px",
-              maxWidth: "380px",
-              width: "100%",
-              boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)",
-              color: "#FFFFFF",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "24px" }}>📱</span>
-                <span style={{ fontWeight: 800, fontSize: "16px" }}>Install on iPhone / iPad</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowIOSModal(false)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#94A3B8",
-                  fontSize: "20px",
-                  cursor: "pointer",
-                }}
-              >
-                ✕
-              </button>
-            </div>
-
-            <p style={{ fontSize: "13px", color: "#CBD5E1", lineHeight: 1.5, margin: "0 0 16px 0" }}>
-              Install <strong>PulseLedger</strong> directly to your home screen for an authentic native fullscreen app experience:
-            </p>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px", fontSize: "13px", color: "#F1F5F9" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                <span style={{ background: "#10B981", color: "#000", borderRadius: "50%", width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "11px", flexShrink: 0 }}>1</span>
-                <span>Tap the <strong>Share button</strong> <span style={{ color: "#38BDF8" }}>[↑]</span> at the bottom of Safari.</span>
-              </div>
-
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                <span style={{ background: "#10B981", color: "#000", borderRadius: "50%", width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "11px", flexShrink: 0 }}>2</span>
-                <span>Scroll down and select <strong>"Add to Home Screen"</strong>.</span>
-              </div>
-
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                <span style={{ background: "#10B981", color: "#000", borderRadius: "50%", width: "22px", height: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "11px", flexShrink: 0 }}>3</span>
-                <span>Tap <strong>Add</strong> in the top-right corner. PulseLedger will appear as a standalone app!</span>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setShowIOSModal(false)}
-              style={{
-                width: "100%",
-                marginTop: "20px",
-                background: "#1E202E",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
-                color: "#FFFFFF",
-                padding: "10px",
-                borderRadius: "12px",
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
+      <DownloadAppModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onTriggerPwaInstall={handlePwaInstall}
+        canPwaInstall={!!deferredPrompt}
+        isIOS={isIOS}
+      />
     </>
   );
 };

@@ -21,8 +21,17 @@ import { LedgerTable } from "./components/LedgerTable";
 import { SubscriptionsGrid } from "./components/SubscriptionsGrid";
 import { getCategoryMeta } from "./utils/categories";
 import { InstallAppButton } from "./components/InstallAppButton";
+import { UserAccountModal } from "./components/UserAccountModal";
+import {
+  UserProfile,
+  loadUserProfile,
+  saveUserProfile,
+  isPinUnlocked,
+  unlockPin,
+} from "./utils/userVault";
 
 export type TabType = "home" | "ledger" | "plan" | "coach";
+export type PersonaType = "Custom" | "Aarav" | "Rohan" | "Kabir";
 import {
   IconHome,
   IconLedger,
@@ -41,7 +50,19 @@ const COMMON_CHIPS = ["Swiggy", "Zomato", "Rapido", "Uber", "Blinkit"];
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState<TabType>("home");
-  const [activePersona, setActivePersona] = useState<"Aarav" | "Rohan" | "Kabir">("Aarav");
+  const [userProfile, setUserProfile] = useState<UserProfile>(() => loadUserProfile());
+  const [activePersona, setActivePersona] = useState<PersonaType>(() => {
+    const saved = loadUserProfile();
+    return saved.isConfigured ? "Custom" : "Aarav";
+  });
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [isPinUnlockedSession, setIsPinUnlockedSession] = useState<boolean>(() => {
+    const profile = loadUserProfile();
+    return isPinUnlocked(profile);
+  });
+  const [enteredPin, setEnteredPin] = useState("");
+  const [pinError, setPinError] = useState(false);
+
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("pulseledger_theme");
@@ -63,6 +84,52 @@ export default function App() {
 
   // Core Data State
   const [safeData, setSafeData] = useState<SafeToSpendData | null>(null);
+
+  const computeCustomSafeData = (p: UserProfile): SafeToSpendData => {
+    const todayDate = new Date().getDate();
+    const inflowDay = p.inflowDayOfMonth || 1;
+    let daysRemaining = inflowDay > todayDate ? inflowDay - todayDate : 30 - todayDate + inflowDay;
+    if (daysRemaining <= 0) daysRemaining = 30;
+    const poolPaise = p.discretionaryPaise;
+    const dailyPaise = Math.max(0, Math.round(poolPaise / daysRemaining));
+    const goalPaise = Math.round(p.primaryGoalTargetPaise / 12);
+
+    return {
+      horizon_days: daysRemaining,
+      pool_paise: poolPaise,
+      daily_paise: dailyPaise,
+      today_budget_paise: dailyPaise,
+      remaining_today_paise: dailyPaise,
+      overcommitted_paise: 0,
+      segments: {
+        free: poolPaise,
+        commitments: p.fixedCostsPaise,
+        goals: goalPaise,
+        buffer: p.bufferPaise,
+      },
+      status: "ok",
+      liquid_paise: p.monthlyIncomePaise,
+      inflows_paise: p.monthlyIncomePaise,
+      commitments_paise: p.fixedCostsPaise,
+      goal_alloc_paise: goalPaise,
+      buffer_paise: p.bufferPaise,
+      spent_today_paise: 0,
+      needs_balance: false,
+      locked_items: [
+        { name: "Fixed Living & Rent", amount_paise: p.fixedCostsPaise, due_date: `Day ${p.inflowDayOfMonth} Inflow Cycle` },
+        { name: p.primaryGoalName, amount_paise: goalPaise, due_date: p.primaryGoalDate },
+        { name: "Emergency Buffer Cushion", amount_paise: p.bufferPaise, due_date: "Protected Reserve" },
+      ],
+      sentence: `Zero-telemetry local vault active for ${p.name}.`,
+    };
+  };
+
+  const effectiveSafeData = useMemo<SafeToSpendData | null>(() => {
+    if (activePersona === "Custom" && userProfile.isConfigured) {
+      return computeCustomSafeData(userProfile);
+    }
+    return safeData;
+  }, [activePersona, userProfile, safeData]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [needsMerchantList, setNeedsMerchantList] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
@@ -463,9 +530,35 @@ export default function App() {
     }
   };
 
+  // Unlock PIN handler
+  const handleUnlockPin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (unlockPin(enteredPin, userProfile)) {
+      setIsPinUnlockedSession(true);
+      setPinError(false);
+      setEnteredPin("");
+    } else {
+      setPinError(true);
+    }
+  };
+
+  // Profile Save Handler
+  const handleSaveProfile = (updated: UserProfile) => {
+    setUserProfile(updated);
+    saveUserProfile(updated);
+    setActivePersona("Custom");
+    setIsPinUnlockedSession(true);
+  };
+
   // Persona switch handler
-  const handlePersonaChange = async (persona: "Aarav" | "Rohan" | "Kabir") => {
+  const handlePersonaChange = async (persona: PersonaType) => {
     setActivePersona(persona);
+    if (persona === "Custom") {
+      if (!userProfile.isConfigured) {
+        setIsAccountModalOpen(true);
+      }
+      return;
+    }
     if (persona === "Aarav") {
       await api.setBalance(42000);
     } else if (persona === "Rohan") {
@@ -479,8 +572,8 @@ export default function App() {
 
   // Runway bar segment widths
   const runwaySegments = useMemo(() => {
-    if (!safeData?.segments) return { free: 25, commitments: 25, goals: 25, buffer: 25 };
-    const { free, commitments, goals, buffer } = safeData.segments;
+    if (!effectiveSafeData?.segments) return { free: 25, commitments: 25, goals: 25, buffer: 25 };
+    const { free, commitments, goals, buffer } = effectiveSafeData.segments;
     const total = free + commitments + goals + buffer;
     if (total <= 0) return { free: 0, commitments: 0, goals: 0, buffer: 0 };
     return {
@@ -489,13 +582,13 @@ export default function App() {
       goals: (goals / total) * 100,
       buffer: (buffer / total) * 100,
     };
-  }, [safeData]);
+  }, [effectiveSafeData]);
 
   // Next money text calculation
   const nextMoneyText = useMemo(() => {
-    if (!safeData) return "";
+    if (!effectiveSafeData) return "";
     const today = new Date();
-    const horizonDays = safeData.horizon_days;
+    const horizonDays = effectiveSafeData.horizon_days;
     const nextDate = new Date();
     nextDate.setDate(today.getDate() + horizonDays - 1);
     const dateFormatted = nextDate.toLocaleDateString("en-IN", {
@@ -503,10 +596,10 @@ export default function App() {
       month: "short",
     });
     return `Next money: ${dateFormatted} (${horizonDays} days)`;
-  }, [safeData]);
+  }, [effectiveSafeData]);
 
   const isOvercommitted =
-    safeData?.status === "overcommitted" || (safeData?.overcommitted_paise || 0) > 0;
+    effectiveSafeData?.status === "overcommitted" || (effectiveSafeData?.overcommitted_paise || 0) > 0;
 
   // Category breakdown for Donut Chart (Matches reference image)
   const spendCategories = useMemo(() => {
@@ -534,19 +627,43 @@ export default function App() {
           <span className="brand-dot" />
           <span className="brand-name">PulseLedger</span>
           <span className="regime-tag">
-            {activePersona === "Aarav" ? "Allowance" : activePersona === "Rohan" ? "Salaried" : "Variable"}
+            {activePersona === "Custom"
+              ? (userProfile.isConfigured ? userProfile.designation : "My Vault")
+              : (activePersona === "Aarav" ? "Allowance" : activePersona === "Rohan" ? "Salaried" : "Variable")}
           </span>
         </div>
 
         <div className="header-controls">
           <InstallAppButton />
 
+          <button
+            type="button"
+            className="minimal-persona-select"
+            onClick={() => setIsAccountModalOpen(true)}
+            style={{
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "4px 12px",
+              background: activePersona === "Custom" ? "rgba(16, 185, 129, 0.15)" : "transparent",
+              borderColor: activePersona === "Custom" ? "#10B981" : "rgba(255, 255, 255, 0.15)",
+              color: activePersona === "Custom" ? "#10B981" : "#E2E8F0",
+              fontWeight: 700,
+            }}
+            title="Configure your personal account, living budget, and security PIN"
+          >
+            <span>👤</span>
+            <span>{userProfile.isConfigured ? userProfile.name : "My Account"}</span>
+          </button>
+
           <select
             className="minimal-persona-select"
             value={activePersona}
             onChange={(e) => handlePersonaChange(e.target.value as any)}
-            title="Switch demo persona"
+            title="Switch demo persona or personal account"
           >
+            <option value="Custom">⭐ {userProfile.isConfigured ? `${userProfile.name} (My Vault)` : "✨ Set Up My Account"}</option>
             <option value="Aarav">👤 Aarav (Student)</option>
             <option value="Rohan">💼 Rohan (Salaried)</option>
             <option value="Kabir">🎨 Kabir (Freelance)</option>
@@ -627,8 +744,8 @@ export default function App() {
             {/* Zen Hero Card (The Breathing Room Anchor) */}
             <section className="zen-hero-card" aria-label="Safe to spend today">
               <div className="zen-hero-label">Safe to Spend Today</div>
-              <div className={`zen-hero-amount ${safeData?.status === "tight" ? "tight" : ""}`}>
-                {formatINR(safeData?.remaining_today_paise ?? 0)}
+              <div className={`zen-hero-amount ${effectiveSafeData?.status === "tight" ? "tight" : ""}`}>
+                {formatINR(effectiveSafeData?.remaining_today_paise ?? 0)}
               </div>
               <div className="zen-pacing-bar">
                 <div
@@ -636,7 +753,7 @@ export default function App() {
                   style={{
                     width: `${Math.min(
                       100,
-                      Math.max(12, ((safeData?.remaining_today_paise ?? 42000) / 100000) * 100)
+                      Math.max(12, ((effectiveSafeData?.remaining_today_paise ?? 42000) / 100000) * 100)
                     )}%`,
                   }}
                 />
@@ -644,9 +761,9 @@ export default function App() {
               <div className="zen-hero-status">
                 {isOvercommitted ? (
                   <span className="zen-status-alert">
-                    ⚠️ Overcommitted by {formatRupeesText(safeData?.overcommitted_paise || 0)} until{" "}
+                    ⚠️ Overcommitted by {formatRupeesText(effectiveSafeData?.overcommitted_paise || 0)} until{" "}
                     {formatDate(
-                      new Date(Date.now() + (safeData?.horizon_days || 1) * 86400000).toISOString().split("T")[0]
+                      new Date(Date.now() + (effectiveSafeData?.horizon_days || 1) * 86400000).toISOString().split("T")[0]
                     )}
                   </span>
                 ) : (
@@ -660,21 +777,21 @@ export default function App() {
               <div className="zen-stat-item">
                 <span className="zen-stat-label">Inflows</span>
                 <span className="zen-stat-val" style={{ color: "var(--tide)" }}>
-                  {formatINR(safeData?.inflows_paise ?? 500000)}
+                  {formatINR(effectiveSafeData?.inflows_paise ?? 500000)}
                 </span>
               </div>
               <div className="zen-stat-divider" />
               <div className="zen-stat-item">
                 <span className="zen-stat-label">Bills & Subs</span>
                 <span className="zen-stat-val" style={{ color: "var(--persimmon)" }}>
-                  {formatINR(safeData?.commitments_paise ?? 76800)}
+                  {formatINR(effectiveSafeData?.commitments_paise ?? 76800)}
                 </span>
               </div>
               <div className="zen-stat-divider" />
               <div className="zen-stat-item">
                 <span className="zen-stat-label">Buffer Cushion</span>
                 <span className="zen-stat-val">
-                  {formatINR(safeData?.buffer_paise ?? 20000)}
+                  {formatINR(effectiveSafeData?.buffer_paise ?? 20000)}
                 </span>
               </div>
             </div>
@@ -1458,6 +1575,137 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* -------------------- 5. LOCAL-FIRST PIN LOCK OVERLAY -------------------- */}
+      {activePersona === "Custom" && userProfile.securityPin && !isPinUnlockedSession && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(4, 5, 8, 0.96)",
+            backdropFilter: "blur(18px)",
+            zIndex: 999999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              background: "#12141F",
+              border: "1px solid rgba(16, 185, 129, 0.35)",
+              borderRadius: "24px",
+              padding: "36px 30px",
+              maxWidth: "400px",
+              width: "100%",
+              textAlign: "center",
+              boxShadow: "0 25px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(16, 185, 129, 0.2)",
+              color: "#FFFFFF",
+            }}
+          >
+            <div
+              style={{
+                width: 64,
+                height: 64,
+                borderRadius: "20px",
+                background: "rgba(16, 185, 129, 0.12)",
+                border: "1px solid #10B981",
+                color: "#10B981",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "30px",
+                margin: "0 auto 18px auto",
+              }}
+            >
+              🔒
+            </div>
+
+            <h3 style={{ margin: "0 0 8px 0", fontSize: "20px", fontWeight: 800, color: "#FFFFFF" }}>
+              Private Vault Locked
+            </h3>
+            <p style={{ margin: "0 0 24px 0", fontSize: "13px", color: "#94A3B8", lineHeight: 1.5 }}>
+              Welcome back, <strong>{userProfile.name}</strong>. Enter your device PIN to unlock your personal financials.
+            </p>
+
+            <form onSubmit={handleUnlockPin} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <input
+                type="password"
+                maxLength={6}
+                value={enteredPin}
+                onChange={(e) => {
+                  setEnteredPin(e.target.value);
+                  setPinError(false);
+                }}
+                placeholder="••••"
+                autoFocus
+                style={{
+                  background: "#0A0B10",
+                  border: pinError ? "1px solid #EF4444" : "1px solid rgba(255, 255, 255, 0.2)",
+                  borderRadius: "14px",
+                  padding: "14px",
+                  color: "#FFFFFF",
+                  fontSize: "26px",
+                  textAlign: "center",
+                  letterSpacing: "12px",
+                  outline: "none",
+                }}
+              />
+
+              {pinError && (
+                <div style={{ color: "#EF4444", fontSize: "12px", fontWeight: 700 }}>
+                  Incorrect PIN. Please try again.
+                </div>
+              )}
+
+              <button
+                type="submit"
+                style={{
+                  background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+                  color: "#000000",
+                  border: "none",
+                  borderRadius: "14px",
+                  padding: "14px",
+                  fontSize: "15px",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  boxShadow: "0 4px 20px rgba(16, 185, 129, 0.4)",
+                }}
+              >
+                Unlock Private Vault
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActivePersona("Aarav")}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#64748B",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  marginTop: "6px",
+                }}
+              >
+                Switch to Demo Persona instead
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* -------------------- 6. CUSTOM ACCOUNT & PRIVACY MODAL -------------------- */}
+      <UserAccountModal
+        profile={userProfile}
+        isOpen={isAccountModalOpen}
+        onClose={() => setIsAccountModalOpen(false)}
+        onSave={handleSaveProfile}
+      />
     </div>
   );
 }
