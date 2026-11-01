@@ -20,6 +20,7 @@ import { FanChart } from "./components/FanChart";
 import { LedgerTable } from "./components/LedgerTable";
 import { SubscriptionsGrid } from "./components/SubscriptionsGrid";
 import { getCategoryMeta } from "./utils/categories";
+import { InstallAppButton } from "./components/InstallAppButton";
 
 export type TabType = "home" | "ledger" | "plan" | "coach";
 import {
@@ -538,6 +539,8 @@ export default function App() {
         </div>
 
         <div className="header-controls">
+          <InstallAppButton />
+
           <select
             className="minimal-persona-select"
             value={activePersona}

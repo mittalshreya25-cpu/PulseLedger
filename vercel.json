@@ -1,0 +1,128 @@
+{
+  "version": 2,
+  "buildCommand": "npm --prefix frontend run build",
+  "outputDirectory": "frontend/dist",
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/safe-to-spend",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/transactions/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/transactions",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/categories",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/recurring/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/recurring",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/simulate/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/simulate",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/solver/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/solver",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/nudges",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/report/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/coach/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/profile",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/ingest/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/rules/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/rules",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/balance/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/integrity/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/icons/(.*)",
+      "dest": "/icons/$1"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/manifest.json"
+    },
+    {
+      "src": "/sw.js",
+      "dest": "/sw.js"
+    },
+    {
+      "src": "/favicon.svg",
+      "dest": "/favicon.svg"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "dest": "/apple-touch-icon.png"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "appId": "com.pulseledger.app",
+  "appName": "PulseLedger",
+  "webDir": "frontend/dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://pulse-ledger-kappa.vercel.app",
+    "cleartext": true
+  },
+  "android": {
+    "backgroundColor": "#08090E",
+    "allowMixedContent": true
+  },
+  "ios": {
+    "backgroundColor": "#08090E"
+  }
+}

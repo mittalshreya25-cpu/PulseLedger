@@ -1,4 +1,12 @@
-const API_BASE = "http://localhost:8000";
+const isLocalhost =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1" ||
+    window.location.hostname === "0.0.0.0");
+
+// In production (e.g. Vercel), use relative URL to avoid Mixed Content HTTP/HTTPS blocks
+const API_BASE =
+  (import.meta as any).env?.VITE_API_BASE ?? (isLocalhost ? "http://localhost:8000" : "");
 
 let isOfflineMode = false;
 export const getOfflineStatus = () => isOfflineMode;
@@ -343,7 +351,7 @@ function getMockFallback<T>(endpoint: string, options?: RequestInit): T {
 }
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const url = `${API_BASE}${endpoint}`;
+  const url = API_BASE ? `${API_BASE}${endpoint}` : endpoint;
   try {
     const res = await fetch(url, {
       ...options,
@@ -366,8 +374,8 @@ async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     isOfflineMode = false;
     return await res.json();
   } catch (err: any) {
-    // Retry with relative URL through Vite dev proxy
-    if (url.startsWith(API_BASE)) {
+    // Retry with relative URL through Vite dev proxy or same origin
+    if (API_BASE && url.startsWith(API_BASE)) {
       try {
         const fallbackRes = await fetch(endpoint, {
           ...options,
